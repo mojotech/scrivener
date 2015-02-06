@@ -16,13 +16,13 @@ defmodule Scrivener do
     %Scrivener.Page{
       page_size: config.page_size,
       page_number: config.page_number,
-      records: records(query, config.repo, config.page_number, config.page_size),
+      entries: entries(query, config.repo, config.page_number, config.page_size),
       total_pages: total_pages(query, config.repo, config.page_size)
     }
   end
 
   def paginate(repo, defaults, query, opts) do
-    paginate(query, Config.new(repo, defaults, query, opts))
+    paginate(query, Config.new(repo, defaults, opts))
   end
 
   defp ceiling(float) do
@@ -37,7 +37,7 @@ defmodule Scrivener do
     end
   end
 
-  defp records(query, repo, page_number, page_size) do
+  defp entries(query, repo, page_number, page_size) do
     offset = page_size * (page_number - 1)
 
     query

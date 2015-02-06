@@ -38,7 +38,7 @@ defmodule ScrivenerTest do
       assert page.page_size == 10
       assert page.page_number == 1
 
-      assert inspect(page.records) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
+      assert inspect(page.entries) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
       assert page.total_pages == 2
     end
 
@@ -54,7 +54,7 @@ defmodule ScrivenerTest do
       assert page.page_size == 10
       assert page.page_number == 1
 
-      assert inspect(page.records) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
+      assert inspect(page.entries) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
       assert page.total_pages == 2
     end
 
@@ -66,7 +66,7 @@ defmodule ScrivenerTest do
       assert page.page_size == 3
       assert page.page_number == 2
 
-      assert inspect(page.records) == inspect(query |> limit([_], ^3) |> offset([_], ^3))
+      assert inspect(page.entries) == inspect(query |> limit([_], ^3) |> offset([_], ^3))
       assert page.total_pages == 4
     end
 
@@ -78,7 +78,7 @@ defmodule ScrivenerTest do
       assert page.page_size == 3
       assert page.page_number == 2
 
-      assert inspect(page.records) == inspect(query |> limit([_], ^3) |> offset([_], ^3))
+      assert inspect(page.entries) == inspect(query |> limit([_], ^3) |> offset([_], ^3))
       assert page.total_pages == 4
     end
 
@@ -95,7 +95,7 @@ defmodule ScrivenerTest do
       assert page.page_size == 4
       assert page.page_number == 3
 
-      assert inspect(page.records) == inspect(query |> limit([_], ^4) |> offset([_], ^8))
+      assert inspect(page.entries) == inspect(query |> limit([_], ^4) |> offset([_], ^8))
       assert page.total_pages == 2
     end
   end

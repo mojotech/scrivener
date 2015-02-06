@@ -1,7 +1,7 @@
 defmodule Scrivener.Config do
   defstruct [:page_number, :page_size, :repo]
 
-  def new(repo, defaults, query, opts) when is_list(opts) do
+  def new(repo, defaults, opts) when is_list(opts) do
     page_number = opts[:page] |> to_int(1)
     page_size = opts[:page_size] |> to_int(defaults[:page_size])
 
@@ -12,7 +12,7 @@ defmodule Scrivener.Config do
     }
   end
 
-  def new(repo, defaults, query, %{} = params) do
+  def new(repo, defaults, %{} = params) do
     page_number = params["page"] |> to_int(1)
     page_size = params["page_size"] |> to_int(defaults[:page_size])
 
