@@ -14,6 +14,8 @@ defmodule Scrivener.Person do
   schema "people" do
     field :name, :string
     field :age, :integer
+
+    has_many :friends, Scrivener.Person
   end
 end
 
@@ -51,6 +53,22 @@ defmodule ScrivenerTest do
 
       assert inspect(page.records) == inspect(query |> limit([_], ^4) |> offset([_], ^8))
       assert page.total_pages == 2
+    end
+
+    it "removes invalid clauses before counting total pages" do
+      query = Person
+      |> where([p], p.age > 30)
+      |> order_by([p], desc: p.age)
+      |> preload(:friends)
+      |> select([p], {p.name})
+
+      page = Scrivener.paginate(query, repo: Scrivener.AnotherFakeRepo)
+
+      assert page.page_size == 10
+      assert page.number == 1
+
+      assert inspect(page.records) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
+      assert page.total_pages == 1
     end
 
     context "params" do

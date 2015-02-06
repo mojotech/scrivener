@@ -7,6 +7,10 @@ defmodule Scrivener do
     paginate(query, Config.new)
   end
 
+  def paginate(query, opts) when is_list(opts) do
+    paginate(query, Config.new(opts))
+  end
+
   def paginate(query, %Config{} = config) do
     %Scrivener.Page{
       page_size: config.page_size,
@@ -45,6 +49,9 @@ defmodule Scrivener do
 
   def total_pages(query, repo, page_size) do
     count = query
+    |> exclude(:order_by)
+    |> exclude(:preload)
+    |> exclude(:select)
     |> select([e], count(e.id))
     |> repo.one
 
