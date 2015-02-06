@@ -38,7 +38,7 @@ def index(conn, params) do
   |> Scrivener.paginate(params)
 
   render conn, :index,
-    interviews: page.records,
+    people: page.records,
     page: page.page_number,
     page_size: page.page_size,
     total_pages: page.total_pages
