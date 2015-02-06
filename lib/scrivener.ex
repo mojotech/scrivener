@@ -14,7 +14,7 @@ defmodule Scrivener do
   def paginate(query, %Config{} = config) do
     %Scrivener.Page{
       page_size: config.page_size,
-      number: config.page_number,
+      page_number: config.page_number,
       records: records(query, config.repo, config.page_number, config.page_size),
       total_pages: total_pages(query, config.repo, config.page_size)
     }
