@@ -60,6 +60,23 @@ defmodule ScrivenerTest do
         assert inspect(page.records) == inspect(query |> limit([_], ^4) |> offset([_], ^8))
         assert page.total_pages == 2
       end
+
+      it "can be provided a Scrivener.Config directly" do
+        query = Person |> where([p], p.age > 30)
+        config = %Scrivener.Config{
+          page_number: 3,
+          page_size: 4,
+          repo: Scrivener.AnotherFakeRepo
+        }
+
+        page = Scrivener.paginate(query, config)
+
+        assert page.page_size == 4
+        assert page.number == 3
+
+        assert inspect(page.records) == inspect(query |> limit([_], ^4) |> offset([_], ^8))
+        assert page.total_pages == 2
+      end
     end
   end
 end
