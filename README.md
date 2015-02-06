@@ -45,3 +45,13 @@ def index(conn, params) do
     total_pages: page.total_pages
 end
 ```
+
+## Installation
+
+Add `scrivener` to your `mix.exs` dependencies.
+
+```elixir
+defp deps do
+  [{:scrivener, "~> 0.2.1"}]
+end
+```
