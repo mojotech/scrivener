@@ -12,6 +12,13 @@ defmodule Scrivener.AnotherFakeRepo do
   def all(query), do: query
 end
 
+defmodule Scrivener.NoOptsRepo do
+  use Scrivener
+
+  def one(_), do: 12
+  def all(query), do: query
+end
+
 defmodule Scrivener.Person do
   use Ecto.Model
 
@@ -34,6 +41,18 @@ defmodule ScrivenerTest do
       query = Person |> where([p], p.age > 30)
 
       page = Scrivener.FakeRepo.paginate(query)
+
+      assert page.page_size == 10
+      assert page.page_number == 1
+
+      assert inspect(page.entries) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
+      assert page.total_pages == 2
+    end
+
+    it "defaults to a page size of 10 if none is provided" do
+      query = Person |> where([p], p.age > 30)
+
+      page = Scrivener.NoOptsRepo.paginate(query)
 
       assert page.page_size == 10
       assert page.page_number == 1
