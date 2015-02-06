@@ -1,13 +1,24 @@
 defmodule Scrivener do
   import Ecto.Query
 
+  alias Scrivener.Config
+
   def paginate(query) do
+    paginate(query, Config.new)
+  end
+
+  def paginate(query, %Config{} = config) do
     %Scrivener.Page{
-      page_size: page_size,
-      number: page_number,
-      records: records(query, repo, page_number, page_size),
-      total_pages: total_pages(query, repo, page_size)
+      page_size: config.page_size,
+      number: config.page_number,
+      records: records(query, config.repo, config.page_number, config.page_size),
+      total_pages: total_pages(query, config.repo, config.page_size)
     }
+  end
+
+  def paginate(query, %{} = params) do
+    config = Config.new(params)
+    paginate(query, config)
   end
 
   defp ceiling(float) do
@@ -22,13 +33,6 @@ defmodule Scrivener do
     end
   end
 
-  defp defaults do
-    Application.get_env(:scrivener, :defaults)
-  end
-
-  defp page_number, do: 1
-
-  defp page_size, do: defaults[:page_size]
 
   defp records(query, repo, page_number, page_size) do
     offset = page_size * (page_number - 1)
@@ -38,8 +42,6 @@ defmodule Scrivener do
     |> offset([_], ^offset)
     |> repo.all
   end
-
-  defp repo, do: defaults[:repo]
 
   def total_pages(query, repo, page_size) do
     count = query

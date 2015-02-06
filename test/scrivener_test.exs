@@ -30,5 +30,17 @@ defmodule ScrivenerTest do
       assert inspect(page.records) == inspect(query |> limit([_], ^10) |> offset([_], ^0))
       assert page.total_pages == 2
     end
+
+    it "can be provided the current page and page size as a params map" do
+      query = Person |> where([p], p.age > 30)
+
+      page = Scrivener.paginate(query, %{"page" => "2", "page_size" => "3"})
+
+      assert page.page_size == 3
+      assert page.number == 2
+
+      assert inspect(page.records) == inspect(query |> limit([_], ^3) |> offset([_], ^3))
+      assert page.total_pages == 4
+    end
   end
 end
