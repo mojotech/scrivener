@@ -1,9 +1,5 @@
 # Scrivener
 
-Paginate your Ecto queries.
-
-## About
-
 Scrivener allows you to paginate your Ecto queries. It gives you useful information such as the total number of pages, the current page, and the current page's records. It works nicely with Phoenix as well.
 
 Scrivener expects you to call `paginate` with, at a minimum, an unevaluated Ecto query. It will then paginate this query and execute it, returning a `Scrivener.Page`. Defaults for `page_size` and `repo` are configued in your `config.exs`.
