@@ -2,6 +2,7 @@ defmodule Scrivener do
   import Ecto.Query
 
   alias Scrivener.Config
+  alias Scrivener.Page
 
   defmacro __using__(opts) do
     quote do
@@ -13,7 +14,7 @@ defmodule Scrivener do
   end
 
   def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
-    %Scrivener.Page{
+    %Page{
       page_size: page_size,
       page_number: page_number,
       entries: entries(query, repo, page_number, page_size),
