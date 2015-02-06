@@ -16,8 +16,8 @@ defmodule Scrivener do
     }
   end
 
-  def paginate(query, %{} = params) do
-    config = Config.new(params)
+  def paginate(query, %{} = params, opts \\ []) do
+    config = Config.new(params, opts)
     paginate(query, config)
   end
 
