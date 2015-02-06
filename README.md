@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/drewolson/scrivener.svg)](https://travis-ci.org/drewolson/scrivener) [![Hex Version](http://img.shields.io/hexpm/v/scrivener.svg?style=flat)](https://hex.pm/packages/scrivener)
 
-Scrivener allows you to paginate your Ecto queries. It gives you useful information such as the total number of pages, the current page, and the current page's records. It works nicely with Phoenix as well.
+Scrivener allows you to paginate your Ecto queries. It gives you useful information such as the total number of pages, the current page, and the current page's entries. It works nicely with Phoenix as well.
 
 Scrivener expects you to call `paginate` with, at a minimum, an unevaluated Ecto query. It will then paginate this query and execute it, returning a `Scrivener.Page`. Defaults for `page_size` are configued when you `use` Scrivener.
 
@@ -39,7 +39,7 @@ def index(conn, params) do
   |> MyApp.Repo.paginate(params)
 
   render conn, :index,
-    people: page.records,
+    people: page.entries,
     page_number: page.page_number,
     page_size: page.page_size,
     total_pages: page.total_pages
