@@ -24,7 +24,7 @@ defmodule MyApp.Person do
     field :name, :string
     field :age, :integer
 
-    has_many :friends, Scrivener.Person
+    has_many :friends, MyApp.Person
   end
 end
 ```
