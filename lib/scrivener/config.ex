@@ -2,20 +2,17 @@ defmodule Scrivener.Config do
   defstruct [:page_number, :page_size, :repo]
 
   def new(repo, defaults, opts) when is_list(opts) do
-    default_page_size = default_page_size(defaults)
-    page_number = opts[:page] |> to_int(1)
-    page_size = opts[:page_size] |> to_int(default_page_size)
+    opts = Enum.reduce(opts, %{}, fn {k, v}, map ->
+      Map.put(map, to_string(k), v)
+    end)
 
-    %Scrivener.Config{
-      page_number: page_number,
-      page_size: page_size,
-      repo: repo
-    }
+    new(repo, defaults, opts)
   end
 
-  def new(repo, defaults, %{} = params) do
-    page_number = params["page"] |> to_int(1)
-    page_size = params["page_size"] |> to_int(defaults[:page_size])
+  def new(repo, defaults, %{} = opts) do
+    default_page_size = default_page_size(defaults)
+    page_number = opts["page"] |> to_int(1)
+    page_size = opts["page_size"] |> to_int(default_page_size)
 
     %Scrivener.Config{
       page_number: page_number,

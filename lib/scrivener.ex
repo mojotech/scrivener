@@ -12,12 +12,12 @@ defmodule Scrivener do
     end
   end
 
-  def paginate(query, %Config{} = config) do
+  def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
     %Scrivener.Page{
-      page_size: config.page_size,
-      page_number: config.page_number,
-      entries: entries(query, config.repo, config.page_number, config.page_size),
-      total_pages: total_pages(query, config.repo, config.page_size)
+      page_size: page_size,
+      page_number: page_number,
+      entries: entries(query, repo, page_number, page_size),
+      total_pages: total_pages(query, repo, page_size)
     }
   end
 
