@@ -4,7 +4,7 @@ defmodule Scrivener.Mixfile do
   def project do
     [
       app: :scrivener,
-      version: "0.2.1",
+      version: "0.3.0-dev",
       elixir: "~> 1.0",
       package: package,
       description: "Paginate your Ecto queries",
