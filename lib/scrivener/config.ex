@@ -1,18 +1,9 @@
 defmodule Scrivener.Config do
   defstruct [:page_number, :page_size, :repo]
 
-  def new do
-    %Scrivener.Config{
-      page_number: 1,
-      page_size: defaults[:page_size],
-      repo: defaults[:repo]
-    }
-  end
-
-  def new(opts) when is_list(opts) do
+  def new(repo, defaults, query, opts) when is_list(opts) do
     page_number = opts[:page] |> to_int(1)
     page_size = opts[:page_size] |> to_int(defaults[:page_size])
-    repo = Dict.get(opts, :repo, defaults[:repo])
 
     %Scrivener.Config{
       page_number: page_number,
@@ -21,20 +12,15 @@ defmodule Scrivener.Config do
     }
   end
 
-  def new(%{} = params, opts) do
+  def new(repo, defaults, query, %{} = params) do
     page_number = params["page"] |> to_int(1)
     page_size = params["page_size"] |> to_int(defaults[:page_size])
-    repo = Dict.get(opts, :repo, defaults[:repo])
 
     %Scrivener.Config{
       page_number: page_number,
       page_size: page_size,
       repo: repo
     }
-  end
-
-  defp defaults do
-    Application.get_env(:scrivener, :defaults)
   end
 
   defp to_int(:error, default), do: default

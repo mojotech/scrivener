@@ -3,12 +3,13 @@ defmodule Scrivener do
 
   alias Scrivener.Config
 
-  def paginate(query) do
-    paginate(query, Config.new)
-  end
-
-  def paginate(query, opts) when is_list(opts) do
-    paginate(query, Config.new(opts))
+  defmacro __using__(opts) do
+    quote do
+      @scrivener_defaults unquote(opts)
+      def paginate(query, options \\ []) do
+        Scrivener.paginate(__MODULE__, @scrivener_defaults, query, options)
+      end
+    end
   end
 
   def paginate(query, %Config{} = config) do
@@ -20,9 +21,8 @@ defmodule Scrivener do
     }
   end
 
-  def paginate(query, %{} = params, opts \\ []) do
-    config = Config.new(params, opts)
-    paginate(query, config)
+  def paginate(repo, defaults, query, opts) do
+    paginate(query, Config.new(repo, defaults, query, opts))
   end
 
   defp ceiling(float) do
@@ -36,7 +36,6 @@ defmodule Scrivener do
       _ -> t
     end
   end
-
 
   defp records(query, repo, page_number, page_size) do
     offset = page_size * (page_number - 1)
