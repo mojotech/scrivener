@@ -47,7 +47,7 @@ defmodule Scrivener do
     |> repo.all
   end
 
-  def total_pages(query, repo, page_size) do
+  defp total_pages(query, repo, page_size) do
     count = query
     |> exclude(:order_by)
     |> exclude(:preload)
