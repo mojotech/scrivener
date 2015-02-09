@@ -46,6 +46,14 @@ def index(conn, params) do
 end
 ```
 
+```elixir
+page = MyApp.Person
+|> where([p], p.age > 30)
+|> order_by([p], desc: p.age)
+|> preload(:friends)
+|> MyApp.Repo.paginate(page: 2, page_size: 5)
+```
+
 ## Installation
 
 Add `scrivener` to your `mix.exs` dependencies.
