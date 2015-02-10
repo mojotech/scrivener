@@ -1,6 +1,17 @@
 defmodule Scrivener.Config do
+  @moduledoc """
+  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `repo`.
+
+      %Scrivener.Config{
+        page_number: 2,
+        page_size: 5,
+        repo: MyApp.Repo
+      }
+  """
+
   defstruct [:page_number, :page_size, :repo]
 
+  @doc false
   def new(repo, defaults, opts) when is_list(opts) do
     opts = Enum.reduce(opts, %{}, fn {k, v}, map ->
       Map.put(map, to_string(k), v)
@@ -9,6 +20,7 @@ defmodule Scrivener.Config do
     new(repo, defaults, opts)
   end
 
+  @doc false
   def new(repo, defaults, %{} = opts) do
     default_page_size = default_page_size(defaults)
     page_number = opts["page"] |> to_int(1)
