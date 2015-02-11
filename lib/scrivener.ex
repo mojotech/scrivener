@@ -102,13 +102,13 @@ defmodule Scrivener do
         use Scrivener
       end
 
-      MyApp.Model |> where([m], m.field == "value") |> MyApp.repo.paginate
+      MyApp.Model |> where([m], m.field == "value") |> MyApp.Repo.paginate
 
   When calling your repo's `paginate` function, you may optionally specify `page` and `page_size`. These values can be specified either as a Keyword or map. The values should be integers or string representations of integers.
 
-      MyApp.Model |> where([m], m.field == "value") |> MyApp.repo.paginate(page: 2, page_size: 10)
+      MyApp.Model |> where([m], m.field == "value") |> MyApp.Repo.paginate(page: 2, page_size: 10)
 
-      MyApp.Model |> where([m], m.field == "value") |> MyApp.repo.paginate(%{"page" => "2", "page_size" => "10"})
+      MyApp.Model |> where([m], m.field == "value") |> MyApp.Repo.paginate(%{"page" => "2", "page_size" => "10"})
 
   The ability to call paginate with a map with string key/values is convenient because you can pass your Phoenix params map to paginate.
   """
