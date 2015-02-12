@@ -20,7 +20,7 @@ defmodule Scrivener.Mixfile do
     [
       {:ecto, "~> 0.7.2"},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, "~> 0.6", only: :dev},
+      {:ex_doc, "~> 0.7", only: :dev},
       {:ex_spec, "~> 0.3.0", only: :test}
     ]
   end
