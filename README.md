@@ -12,7 +12,7 @@ You may also want to call `paginate` with a params map along with your query. If
 
 ```elixir
 defmodule MyApp.Repo do
-  use Ecto.Repo, otp_app: :my_app, adapter: Ecto.Adapters.Postgres
+  use Ecto.Repo, otp_app: :my_app
   use Scrivener, page_size: 10
 end
 ```
