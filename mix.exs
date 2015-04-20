@@ -8,7 +8,11 @@ defmodule Scrivener.Mixfile do
       elixir: "~> 1.0",
       package: package,
       description: "Paginate your Ecto queries",
-      deps: deps
+      deps: deps,
+      docs: [
+        main: Scrivener,
+        readme: "README.md"
+      ]
     ]
   end
 
