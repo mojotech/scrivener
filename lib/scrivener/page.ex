@@ -11,4 +11,6 @@ defmodule Scrivener.Page do
   """
 
   defstruct [:entries, :page_number, :page_size, :total_pages]
+
+  @type t :: %__MODULE__{}
 end

@@ -11,6 +11,8 @@ defmodule Scrivener.Config do
 
   defstruct [:page_number, :page_size, :repo]
 
+  @type t :: %__MODULE__{}
+
   @doc false
   def new(repo, defaults, opts) when is_list(opts) do
     opts = Enum.reduce(opts, %{}, fn {k, v}, map ->
