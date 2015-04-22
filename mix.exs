@@ -44,7 +44,12 @@ defmodule Scrivener.Mixfile do
     [
       contributors: ["Drew Olson"],
       licenses: ["MIT"],
-      links: %{"github" => "https://github.com/drewolson/scrivener"}
+      links: %{"github" => "https://github.com/drewolson/scrivener"},
+      files: [
+        "lib",
+        "mix.exs",
+        "README.md"
+      ]
     ]
   end
 end

@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Db.Reset do
+defmodule Mix.Tasks.Scrivener.Db.Reset do
   use Mix.Task
 
   def run(_args) do
