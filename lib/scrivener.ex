@@ -67,7 +67,7 @@ defmodule Scrivener do
     quote do
       @scrivener_defaults unquote(opts)
 
-      @spec paginate(Ecto.Query.t, %{} | Keyword.t) :: Scrivener.Page.t
+      @spec paginate(Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
       def paginate(query, options \\ []) do
         Scrivener.paginate(__MODULE__, @scrivener_defaults, query, options)
       end
@@ -115,7 +115,7 @@ defmodule Scrivener do
 
   The ability to call paginate with a map with string key/values is convenient because you can pass your Phoenix params map to paginate.
   """
-  @spec paginate(Ecto.Repo.t, Keyword.t, Ecto.Query.t, %{} | Keyword.t) :: Scrivener.Page.t
+  @spec paginate(Ecto.Repo.t, Keyword.t, Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
   def paginate(repo, defaults, query, opts) do
     paginate(query, Config.new(repo, defaults, opts))
   end
