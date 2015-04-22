@@ -6,6 +6,7 @@ defmodule Scrivener.Mixfile do
       app: :scrivener,
       version: "0.5.0",
       elixir: "~> 1.0",
+      elixirc_paths: elixirc_paths(Mix.env),
       package: package,
       description: "Paginate your Ecto queries",
       deps: deps,
@@ -17,8 +18,13 @@ defmodule Scrivener.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [
+      applications: applications(Mix.env)
+    ]
   end
+
+  defp applications(:test), do: [:postgrex, :ecto, :logger]
+  defp applications(_), do: [:logger]
 
   defp deps do
     [
@@ -26,9 +32,13 @@ defmodule Scrivener.Mixfile do
       {:dialyze, "~> 0.1.4", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.7", only: :dev},
-      {:ex_spec, "~> 0.3.0", only: :test}
+      {:ex_spec, "~> 0.3.0", only: :test},
+      {:postgrex, ">= 0.0.0", only: :test, override: true}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp package do
     [
