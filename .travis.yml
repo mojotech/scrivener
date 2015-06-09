@@ -1,4 +1,4 @@
-language: erlang
+language: elixir
 otp_release:
   - 17.4
 elixir:
@@ -8,4 +8,3 @@ before_script:
   - mix local.hex --force
   - mix deps.get --only test
   - MIX_ENV=test mix scrivener.db.reset
-script: mix test
