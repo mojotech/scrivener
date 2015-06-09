@@ -33,7 +33,8 @@ defmodule Scrivener do
           people: page.entries,
           page_number: page.page_number,
           page_size: page.page_size,
-          total_pages: page.total_pages
+          total_pages: page.total_pages,
+          total_entries: page.total_entries
       end
 
       page = MyApp.Person
@@ -89,11 +90,14 @@ defmodule Scrivener do
   """
   @spec paginate(Ecto.Query.t, Scrivener.Config.t) :: Scrivener.Page.t
   def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
+    total_entries = total_entries(query, repo)
+
     %Page{
       page_size: page_size,
       page_number: page_number,
       entries: entries(query, repo, page_number, page_size),
-      total_pages: total_pages(query, repo, page_size)
+      total_entries: total_entries,
+      total_pages: total_pages(total_entries, page_size)
     }
   end
 
@@ -141,14 +145,16 @@ defmodule Scrivener do
     |> repo.all
   end
 
-  defp total_pages(query, repo, page_size) do
-    count = query
+  defp total_entries(query, repo) do
+    query
     |> exclude(:order_by)
     |> exclude(:preload)
     |> exclude(:select)
     |> select([e], count(e.id))
     |> repo.one
+  end
 
-    ceiling(count / page_size)
+  defp total_pages(total_entries, page_size) do
+    ceiling(total_entries / page_size)
   end
 end

@@ -42,7 +42,8 @@ def index(conn, params) do
     people: page.entries,
     page_number: page.page_number,
     page_size: page.page_size,
-    total_pages: page.total_pages
+    total_pages: page.total_pages,
+    total_entries: page.total_entries
 end
 ```
 

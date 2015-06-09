@@ -30,6 +30,7 @@ defmodule ScrivenerTest do
       assert page.page_size == 5
       assert page.page_number == 1
       assert page.entries == Enum.take(posts, 5)
+      assert page.total_entries == 6
       assert page.total_pages == 2
     end
 
