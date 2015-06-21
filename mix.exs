@@ -4,7 +4,7 @@ defmodule Scrivener.Mixfile do
   def project do
     [
       app: :scrivener,
-      version: "0.7.0",
+      version: "0.7.1",
       elixir: "~> 1.0",
       elixirc_paths: elixirc_paths(Mix.env),
       package: package,
@@ -46,7 +46,8 @@ defmodule Scrivener.Mixfile do
       licenses: ["MIT"],
       links: %{"github" => "https://github.com/drewolson/scrivener"},
       files: [
-        "lib",
+        "lib/scrivener.ex",
+        "lib/scrivener",
         "mix.exs",
         "README.md"
       ]
