@@ -9,14 +9,14 @@ defmodule ScrivenerTest do
       title: "Title unpublished",
       body: "Body unpublished",
       published: false
-    } |> Scrivener.Repo.insert
+    } |> Scrivener.Repo.insert!
 
     Enum.map(1..6, fn i ->
       %Post{
         title: "Title #{i}",
         body: "Body #{i}",
         published: true
-      } |> Scrivener.Repo.insert
+      } |> Scrivener.Repo.insert!
     end)
   end
 
@@ -25,7 +25,7 @@ defmodule ScrivenerTest do
       %KeyValue{
         key: "key_#{i}",
         value: (rem(i, 2) |> to_string)
-      } |> Scrivener.Repo.insert
+      } |> Scrivener.Repo.insert!
     end)
   end
 
