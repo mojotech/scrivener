@@ -1,6 +1,8 @@
 defmodule Mix.Tasks.Scrivener.Db.Reset do
   use Mix.Task
 
+  @moduledoc false
+
   def run(_args) do
     Logger.configure(level: :error)
 
