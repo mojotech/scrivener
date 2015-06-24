@@ -33,7 +33,7 @@ defmodule Scrivener.Mixfile do
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.7", only: :dev},
       {:ex_spec, "~> 0.3.0", only: :test},
-      {:postgrex, "~> 0.8.2", only: :test, override: true}
+      {:postgrex, "~> 0.8.0", only: :test, override: true}
     ]
   end
 
