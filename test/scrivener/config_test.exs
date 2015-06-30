@@ -5,7 +5,7 @@ defmodule Scrivener.ConfigTest do
 
   describe "new" do
     it "can be provided options as a keyword" do
-      config = Config.new(:repo, %{}, page_number: 1, page_size: 10)
+      config = Config.new(:repo, [], page_number: 1, page_size: 10)
 
       assert config.repo == :repo
       assert config.page_number == 1
