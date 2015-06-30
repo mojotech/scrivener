@@ -1,7 +1,7 @@
 %{"decimal": {:hex, :decimal, "1.1.0"},
   "dialyze": {:hex, :dialyze, "0.1.4"},
   "earmark": {:hex, :earmark, "0.1.17"},
-  "ecto": {:hex, :ecto, "0.13.0"},
+  "ecto": {:hex, :ecto, "0.13.1"},
   "ex_doc": {:hex, :ex_doc, "0.7.3"},
   "ex_spec": {:hex, :ex_spec, "0.3.0"},
   "poolboy": {:hex, :poolboy, "1.5.1"},
