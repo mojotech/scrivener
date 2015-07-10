@@ -150,7 +150,7 @@ defmodule Scrivener do
     |> exclude(:order_by)
     |> exclude(:preload)
     |> exclude(:select)
-    |> select([e], count('*'))
+    |> select([e], count("*"))
     |> repo.one
   end
 
