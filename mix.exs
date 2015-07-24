@@ -4,7 +4,7 @@ defmodule Scrivener.Mixfile do
   def project do
     [
       app: :scrivener,
-      version: "0.10.0-dev",
+      version: "0.12.0-dev",
       elixir: "~> 1.0",
       elixirc_paths: elixirc_paths(Mix.env),
       package: package,
@@ -28,13 +28,13 @@ defmodule Scrivener.Mixfile do
 
   defp deps do
     [
-      {:ecto, "~> 0.13.0"},
+      {:ecto, "~> 0.14.0"},
       {:phoenix_html, "~> 1.2.0", optional: true},
       {:dialyze, "~> 0.1.4", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.7", only: :dev},
       {:ex_spec, "~> 0.3.0", only: :test},
-      {:postgrex, "~> 0.8.0", only: :test}
+      {:postgrex, "~> 0.9.0", only: :test}
     ]
   end
 
