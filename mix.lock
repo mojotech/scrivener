@@ -4,5 +4,9 @@
   "ecto": {:hex, :ecto, "0.14.1"},
   "ex_doc": {:hex, :ex_doc, "0.7.3"},
   "ex_spec": {:hex, :ex_spec, "0.3.0"},
+  "phoenix": {:hex, :phoenix, "0.14.0"},
+  "phoenix_html": {:hex, :phoenix_html, "1.2.1"},
+  "plug": {:hex, :plug, "0.13.0"},
+  "poison": {:hex, :poison, "1.4.0"},
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "postgrex": {:hex, :postgrex, "0.9.1"}}
