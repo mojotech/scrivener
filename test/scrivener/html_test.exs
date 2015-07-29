@@ -2,6 +2,7 @@ defmodule Scrivener.HTMLTest do
   use Scrivener.TestCase
   alias Scrivener.HTML
   import Scrivener.Support.HTML
+  alias Scrivener.Page
 
   describe "raw_pagination_links" do
 
@@ -127,18 +128,21 @@ defmodule Scrivener.HTMLTest do
   describe "pagination_links" do
 
     it "accepts a paginator and options (same as defaults)" do
-      assert {:safe, _html} = HTML.pagination_links([total_pages: 10, page_number: 5], view_style: :bootstrap, path: &( "?page=#{&1[:page]}" ), path_args: [])
+      assert {:safe, _html} = HTML.pagination_links(%Page{total_pages: 10, page_number: 5}, view_style: :bootstrap, path: &MyApp.Router.Helpers.post_path/3)
     end
 
     it "supplies defaults" do
-      assert {:safe, _html} = HTML.pagination_links(total_pages: 10, page_number: 5)
+      assert {:safe, _html} = HTML.pagination_links(%Page{total_pages: 10, page_number: 5})
     end
 
     it "allows options in any order" do
-      assert {:safe, _html} = HTML.pagination_links([total_pages: 10, page_number: 5], path_args: [], view_style: :bootstrap, path: &( "?page=#{&1[:page]}" ))
+      assert {:safe, _html} = HTML.pagination_links(%Page{total_pages: 10, page_number: 5}, view_style: :bootstrap, path: &MyApp.Router.Helpers.post_path/3)
     end
 
     it "errors for unsupported view styles" do
+      assert_raise RuntimeError, fn ->
+        HTML.pagination_links(%Page{total_pages: 10, page_number: 5}, view_style: :unknown)
+      end
     end
 
   end

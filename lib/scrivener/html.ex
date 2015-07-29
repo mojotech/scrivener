@@ -3,10 +3,18 @@ if Code.ensure_loaded?(Phoenix.HTML) do
     use Phoenix.HTML
 
     defmodule Default do
-      def path(opts), do: "?page=#{opts[:page]}"
+      @doc """
+      Default path function when none provided. Used when automatic path function
+      resolution cannot be performed.
+      """
+      def path(_conn, :index, opts) do
+        Enum.reduce opts, "?", fn {k, v}, s ->
+          "#{s}#{if(s == "?", do: "", else: "&")}#{k}=#{v}"
+        end
+      end
     end
 
-    @defaults [view_style: :bootstrap, path: &Default.path/1, path_args: []]
+    @defaults [view_style: :bootstrap]
     @doc """
     Generates the HTML pagination links for a given paginator returned by Scrivener.
 
@@ -16,10 +24,11 @@ if Code.ensure_loaded?(Phoenix.HTML) do
 
     The `view_style` indicates which CSS framework you are using. The default is
     `:bootstrap`, but you can add your own using the `Scrivener.HTML.raw_pagination_links/2` function
-    if desired. The `path` option is a function which can be used to generate the link URL.
-    `path_args` are all the arguments to supply to `path`. An example of the output data:
+    if desired.
 
-        iex> Scrivener.HTML.pagination_links(%{total_pages: 10, page_number: 5})
+    An example of the output data:
+
+        iex> Scrivener.HTML.pagination_links(%Scrivener.Page{total_pages: 10, page_number: 5})
         {:safe,
           ["<nav>",
            ["<ul class=\"pagination\">",
@@ -36,19 +45,64 @@ if Code.ensure_loaded?(Phoenix.HTML) do
              ["<li>", ["<a class=\"\" href=\"?page=10\">", "10", "</a>"], "</li>"],
              ["<li>", ["<a class=\"\" href=\"?page=6\">", "&gt;&gt;", "</a>"], "</li>"]],
             "</ul>"], "</nav>"]}
+
+    In order to generate links with nested objects (such as a list of comments for a given post)
+    it is necessary to pass those arguments. All arguments in the `args` parameter will be directly
+    passed to the path helper function. Everything within `opts` which are not options will passed
+    as `params` to the path helper function. For example, `@post`, which has an index of paginated
+    `@comments` would look like the following:
+
+        Scrivener.HTML.pagination_links(@conn, @comments, [@post.id], view_style: :bootstrap, my_param: "foo")
+
+    You'll need to be sure to configure `:scrivener_html` with the `:routes_helper`
+    module (ex. MyApp.Routes.Helpers) in Phoenix. With that configured, the above would generate calls
+    to the `post_comment_path(@conn, :index, @post.id, my_param: "foo", page: page)` for each page link.
+
+    In times that it is necessary to override the automatic path function resolution, you may supply the
+    correct path function to use by adding an extra key in the `opts` parameter of `:path`.
+    For example:
+
+        Scrivener.HTML.pagination_links(@conn, @comments, [@post.id], path: &post_comment_path/4)
+
+    Be sure to supply the function which accepts query string parameters (starts at arity 3, +1 for each relation),
+    because the `page` parameter will always be supplied. If you supply the wrong function you will receive a
+    function undefined exception.
     """
-    def pagination_links(paginator, opts \\ []) do
-      # TODO: Get view_style from config for default
-      options = Dict.merge @defaults, opts
+    def pagination_links(conn, paginator, args, opts) do
+      merged_opts = Dict.merge @defaults,
+                view_style: opts[:view_style] || Application.get_env(:scrivener_html, :view_style, :bootstrap)
+
+      path = opts[:path] || find_path_fn(paginator[:entries], args)
+      params = Dict.drop opts, (Dict.keys(@defaults) ++ [:path])
+
       # Ensure ordering so pattern matching is reliable
       _pagination_links paginator,
-        view_style: options[:view_style],
-        path: options[:path],
-        path_args: options[:path_args]
+        view_style: merged_opts[:view_style],
+        path: path,
+        args: [conn, :index] ++ args,
+        params: params
+    end
+    def pagination_links(%Scrivener.Page{} = paginator), do: pagination_links(nil, paginator, [], [])
+    def pagination_links(%Scrivener.Page{} = paginator, opts), do: pagination_links(nil, paginator, [], opts)
+    def pagination_links(conn, %Scrivener.Page{} = paginator), do: pagination_links(conn, paginator, [], [])
+    def pagination_links(conn, paginator, [{a, _} | _] = opts), do: pagination_links(conn, paginator, [], opts)
+    def pagination_links(conn, paginator, [_ | _] = args), do: pagination_links(conn, paginator, args, [])
+
+    defp find_path_fn(nil, _path_args), do: &Default.path/3
+    # Define a different version of `find_path_fn` whenever Phoenix is available.
+    if Code.ensure_loaded(Phoenix.Naming) do
+      defp find_path_fn(entries, path_args) do
+        routes_helper_module = Application.get_env(:scrivener_html, :routes_helper) || raise("Scrivener.HTML: Unable to find configured routes_helper module (ex. MyApp.RoutesHelper)")
+        path = (path_args ++ [entries |> List.first]) |> Enum.reduce &( :"#{&2}_#{Phoenix.Naming.resource_name(&1[:__struct__])}")
+        {path_fn, []} = Code.eval_quoted(quote do: &unquote(routes_helper_module).unquote(path)/unquote((path_args |> Enum.count) + 3))
+        path_fn
+      end
+    else
+      defp find_path_fn(_entries, _args), do: &Default/3
     end
 
     # Bootstrap implementation
-    defp _pagination_links(paginator, [view_style: :bootstrap, path: path, path_args: path_args]) do
+    defp _pagination_links(paginator, [view_style: :bootstrap, path: path, args: args, params: params]) do
       # Currently nesting content_tag's is broken...
       links = raw_pagination_links(paginator)
       |> Enum.map fn ({text, page_number})->
@@ -56,11 +110,16 @@ if Code.ensure_loaded?(Phoenix.HTML) do
         if paginator[:page_number] == page_number do
           classes = ["active"]
         end
-        l = link("#{text}", to: apply(path, path_args ++ [[page: page_number]]), class: Enum.join(classes, " "))
+        params_with_page = Dict.merge(params, page: page_number)
+        l = link("#{text}", to: apply(path, args ++ [params_with_page]), class: Enum.join(classes, " "))
         content_tag(:li, l)
       end
       ul = content_tag(:ul, links, class: "pagination")
       content_tag(:nav, ul)
+    end
+
+    defp _pagination_links(_paginator, [view_style: unknown, path: _path, args: _args, params: _params]) do
+      raise "Scrivener.HTML: Unable to render view_style #{inspect unknown}"
     end
 
     @defaults [distance: 5, next: ">>", previous: "<<", first: true, last: true]
@@ -96,7 +155,6 @@ if Code.ensure_loaded?(Phoenix.HTML) do
       end) |> Enum.filter(&(&1))
     end
 
-
     # Computing page number ranges
     defp page_number_list(page, total, distance) when is_integer(distance) and distance >= 1 do
       Enum.to_list((page - beginning_distance(page, distance))..(page + end_distance(page, total, distance)))
@@ -105,6 +163,7 @@ if Code.ensure_loaded?(Phoenix.HTML) do
       raise "Scrivener.HTML: Distance cannot be less than one."
     end
 
+    # Beginning distance computation
     defp beginning_distance(page, distance) when page - distance < 1 do
       distance + (page - distance - 1)
     end
@@ -112,6 +171,7 @@ if Code.ensure_loaded?(Phoenix.HTML) do
       distance
     end
 
+    # End distance computation
     defp end_distance(page, total, distance) when page + distance >= total do
       total - page
     end

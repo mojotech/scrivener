@@ -1,4 +1,5 @@
 defmodule Scrivener.Page do
+  @derive [Enumerable, Access]
   @moduledoc """
   A `Scrivener.Page` has 5 fields that can be accessed: `entries`, `page_number`, `page_size`, `total_entries` and `total_pages`.
 

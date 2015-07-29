@@ -6,5 +6,9 @@ config :scrivener, Scrivener.Repo,
   database: "scrivener_test",
   username: System.get_env("SCRIVENER_DB_USER") || System.get_env("USER")
 
+config :scrivener_html,
+  routes_helper: MyApp.Routes.Helper,
+  view_style: :bootstrap
+
 config :logger, :console,
   level: :error
