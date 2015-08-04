@@ -150,12 +150,15 @@ defmodule Scrivener do
   end
 
   defp total_entries(query, repo) do
-    query
+    stripped_query = query
     |> exclude(:order_by)
     |> exclude(:preload)
     |> exclude(:select)
-    |> select([_], count("*"))
-    |> repo.one
+
+    {query_sql, parameters} =  Ecto.Adapters.SQL.to_sql(:all, repo, stripped_query)
+    %{num_rows: 1, rows: [[count]]} = Ecto.Adapters.SQL.query(repo, "SELECT count(*) FROM (#{query_sql}) AS temp", parameters)
+
+    count
   end
 
   defp total_pages(total_entries, page_size) do
