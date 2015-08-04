@@ -15,4 +15,8 @@ defmodule Scrivener.Post do
   def published(query) do
     query |> where([p], p.published == true)
   end
+
+  def unpublished(query) do
+    query |> where([p], p.published == false)
+  end
 end

@@ -2,14 +2,22 @@ defmodule ScrivenerTest do
   use Scrivener.TestCase
 
   alias Scrivener.Post
+  alias Scrivener.Comment
   alias Scrivener.KeyValue
 
   defp create_posts do
-    %Post{
+    unpublished_post = %Post{
       title: "Title unpublished",
       body: "Body unpublished",
       published: false
     } |> Scrivener.Repo.insert!
+
+    Enum.map(1..2, fn i ->
+      %Comment{
+        body: "Body #{i}",
+        post_id: unpublished_post.id
+      } |> Scrivener.Repo.insert!
+    end)
 
     Enum.map(1..6, fn i ->
       %Post{
@@ -112,6 +120,17 @@ defmodule ScrivenerTest do
 
       assert page.total_entries == 5
       assert page.total_pages == 3
+    end
+
+    it "can be used with a group by clause" do
+      create_posts
+
+      page = Post
+      |> join(:left, [p], c in assoc(p, :comments))
+      |> group_by([p], p.id)
+      |> Scrivener.Repo.paginate
+
+      assert page.total_entries == 7
     end
   end
 end
