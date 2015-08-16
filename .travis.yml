@@ -1,8 +1,9 @@
 language: elixir
 otp_release:
-  - 17.4
+  - 17.5
+  - 18.0
 elixir:
-  - 1.0.4
+  - 1.0.5
 before_script:
   - export SCRIVENER_DB_USER=postgres
   - mix local.hex --force
