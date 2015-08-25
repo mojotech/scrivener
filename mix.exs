@@ -28,7 +28,7 @@ defmodule Scrivener.Mixfile do
 
   defp deps do
     [
-      {:ecto, "~> 0.16.0"},
+      {:ecto, "~> 1.0"},
       {:dialyze, "~> 0.1.4", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.8", only: :dev},
