@@ -42,7 +42,7 @@ defmodule Scrivener.Mixfile do
 
   defp package do
     [
-      contributors: ["Drew Olson"],
+      maintainers: ["Drew Olson"],
       licenses: ["MIT"],
       links: %{"github" => "https://github.com/drewolson/scrivener"},
       files: [
