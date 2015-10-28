@@ -8,7 +8,7 @@ defmodule Scrivener do
 
       defmodule MyApp.Repo do
         use Ecto.Repo, otp_app: :my_app
-        use Scrivener, page_size: 10
+        use Scrivener, page_size: 10, max_page_size: 100
       end
 
       defmodule MyApp.Person do
@@ -50,7 +50,11 @@ defmodule Scrivener do
   alias Scrivener.Page
 
   @doc """
-  Scrivener is meant to be `use`d by an Ecto repository. When `use`d, an optional default for `page_size` can be provided. If `page_size` is not provided a default of 10 will be used.
+  Scrivener is meant to be `use`d by an Ecto repository.
+
+  When `use`d, an optional default for `page_size` can be provided. If `page_size` is not provided a default of 10 will be used.
+
+  A `max_page_size` can also optionally can be provided. This enforces a hard ceiling for the page size, even if you're allow users of your application to specify `page_size` via query parameters. If not provided, there will be no limit to page size.
 
       defmodule MyApp.Repo do
         use Ecto.Repo, ...
@@ -59,10 +63,10 @@ defmodule Scrivener do
 
       defmodule MyApp.Repo do
         use Ecto.Repo, ...
-        use Scrivener, page_size: 5
+        use Scrivener, page_size: 5, max_page_size: 100
       end
 
-    When `use` is called a `paginate` function is defined in the Ecto repo. See the `paginate` documentation for more information.
+    When `use` is called, a `paginate` function is defined in the Ecto repo. See the `paginate` documentation for more information.
   """
   defmacro __using__(opts) do
     quote do
