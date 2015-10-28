@@ -84,6 +84,14 @@ defmodule ScrivenerTest do
       assert page.total_pages == 2
     end
 
+    it "will respect the max_page_size configuration" do
+      page = Post
+      |> Post.published
+      |> Scrivener.Repo.paginate(%{"page" => "1", "page_size" => "20"})
+
+      assert page.page_size == 10
+    end
+
     it "can be provided a Scrivener.Config directly" do
       posts = create_posts
 
