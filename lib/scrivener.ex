@@ -54,7 +54,7 @@ defmodule Scrivener do
 
   When `use`d, an optional default for `page_size` can be provided. If `page_size` is not provided a default of 10 will be used.
 
-  A `max_page_size` can also optionally can be provided. This enforces a hard ceiling for the page size, even if you're allow users of your application to specify `page_size` via query parameters. If not provided, there will be no limit to page size.
+  A `max_page_size` can also optionally can be provided. This enforces a hard ceiling for the page size, even if you allow users of your application to specify `page_size` via query parameters. If not provided, there will be no limit to page size.
 
       defmodule MyApp.Repo do
         use Ecto.Repo, ...
