@@ -31,8 +31,8 @@ defmodule Scrivener.Mixfile do
       {:ecto, "~> 1.0"},
       {:dialyze, "~> 0.2.0", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, "~> 0.9.0", only: :dev},
-      {:ex_spec, "~> 0.3.0", only: :test},
+      {:ex_doc, "~> 0.10.0", only: :dev},
+      {:ex_spec, "~> 1.0", only: :test},
       {:postgrex, "~> 0.9.0", optional: true}
     ]
   end
