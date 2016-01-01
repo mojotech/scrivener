@@ -24,7 +24,7 @@ defmodule Scrivener.Config do
 
   @doc false
   def new(repo, defaults, %{} = opts) do
-    page_number = opts["page"] |> to_int(1)
+    page_number = (opts["page"] || opts[:page]) |> to_int(1)
 
     %Scrivener.Config{
       page_number: page_number,
@@ -39,7 +39,7 @@ defmodule Scrivener.Config do
 
   def page_size(defaults, opts) do
     default_page_size = default_page_size(defaults)
-    requested_page_size = opts["page_size"] |> to_int(default_page_size)
+    requested_page_size = (opts["page_size"] || opts[:page_size]) |> to_int(default_page_size)
 
     min(requested_page_size, defaults[:max_page_size])
   end

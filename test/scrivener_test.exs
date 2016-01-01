@@ -71,6 +71,19 @@ defmodule ScrivenerTest do
       assert page.total_pages == 2
     end
 
+    it "can be provided the current page and page size as a atom params map" do
+      posts = create_posts
+
+      page = Post
+      |> Post.published
+      |> Scrivener.Repo.paginate(%{page: 2, page_size: 3})
+
+      assert page.page_size == 3
+      assert page.page_number == 2
+      assert page.entries == Enum.drop(posts, 3)
+      assert page.total_pages == 2
+    end
+
     it "can be provided the current page and page size as options" do
       posts = create_posts
 
