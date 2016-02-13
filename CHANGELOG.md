@@ -2,6 +2,8 @@
 
 ## 1.2.0-dev
 
+## 1.1.2
+
 * Correctly handle join tables when counting entries
 
 ## 1.1.1
