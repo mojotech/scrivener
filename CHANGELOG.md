@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+* Correctly handle join tables when counting entries
+
 ## 1.1.1
 
 * Make `postgrex` dependency version less strict
