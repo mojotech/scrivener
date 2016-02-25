@@ -5,6 +5,4 @@ elixir:
   - 1.2.3
 before_script:
   - export SCRIVENER_DB_USER=postgres
-  - mix local.hex --force
-  - mix deps.get --only test
   - MIX_ENV=test mix scrivener.db.reset
