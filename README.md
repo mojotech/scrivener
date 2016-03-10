@@ -8,8 +8,6 @@ First, you'll want to `use` Scrivener in your application's Repo. This will add 
 
 You may also want to call `paginate` with a params map along with your query. If provided with a params map, Scrivener will use the values in the keys `"page"` and `"page_size"` before using any configured defaults.
 
-See [Scrivener.HTML](https://github.com/mgwidmann/scrivener_html) for generating HTML output using Bootstrap or other frameworks. For API pagination see [Scrivener.Headers](https://github.com/doomspork/scrivener_headers).
-
 ## Example
 
 ```elixir
@@ -66,6 +64,11 @@ defp deps do
   [{:scrivener, "~> 1.0"}]
 end
 ```
+
+## Related Libraries
+
+* [Scrivener.HTML](https://github.com/mgwidmann/scrivener_html) generates HTML output using Bootstrap or other frameworks
+* [Scrivener.Headers](https://github.com/doomspork/scrivener_headers) adds response headers for API pagination
 
 ## Contributing
 
