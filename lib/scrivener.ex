@@ -44,11 +44,6 @@ defmodule Scrivener do
       |> MyApp.Repo.paginate(page: 2, page_size: 5)
   """
 
-  import Ecto.Query
-
-  alias Scrivener.Config
-  alias Scrivener.Page
-
   @doc """
   Scrivener is meant to be `use`d by an Ecto repository.
 
@@ -72,9 +67,9 @@ defmodule Scrivener do
     quote do
       @scrivener_defaults unquote(opts)
 
-      @spec paginate(Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
-      def paginate(query, options \\ []) do
-        Scrivener.paginate(__MODULE__, @scrivener_defaults, query, options)
+      @spec paginate(any, map | Keyword.t) :: Scrivener.Page.t
+      def paginate(pageable, options \\ []) do
+        Scrivener.paginate(pageable, __MODULE__, @scrivener_defaults, options)
       end
     end
   end
@@ -83,26 +78,18 @@ defmodule Scrivener do
   The `paginate` function can also be called with a `Scrivener.Config` for more fine-grained configuration. In this case, it is called directly on the `Scrivener` module.
 
       config = %Scrivener.Config{
-        page_size: 5,
+        module: MyApp.Repo,
         page_number: 2,
-        repo: MyApp.Repo
+        page_size: 5
       }
 
       MyApp.Model
       |> where([m], m.field == "value")
       |> Scrivener.paginate(config)
   """
-  @spec paginate(Ecto.Query.t, Scrivener.Config.t) :: Scrivener.Page.t
-  def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
-    total_entries = total_entries(query, repo)
-
-    %Page{
-      page_size: page_size,
-      page_number: page_number,
-      entries: entries(query, repo, page_number, page_size),
-      total_entries: total_entries,
-      total_pages: total_pages(total_entries, page_size)
-    }
+  @spec paginate(any, Scrivener.Config.t) :: Scrivener.Page.t
+  def paginate(pageable, config) do
+    Scrivener.Paginater.paginate(pageable, config)
   end
 
   @doc """
@@ -123,45 +110,8 @@ defmodule Scrivener do
 
   The ability to call paginate with a map with string key/values is convenient because you can pass your Phoenix params map to paginate.
   """
-  @spec paginate(Ecto.Repo.t, Keyword.t, Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
-  def paginate(repo, defaults, query, opts) do
-    paginate(query, Config.new(repo, defaults, opts))
-  end
-
-  defp ceiling(float) do
-    t = trunc(float)
-
-    case float - t do
-      neg when neg < 0 ->
-        t
-      pos when pos > 0 ->
-        t + 1
-      _ -> t
-    end
-  end
-
-  defp entries(query, repo, page_number, page_size) do
-    offset = page_size * (page_number - 1)
-
-    query
-    |> limit([_], ^page_size)
-    |> offset([_], ^offset)
-    |> repo.all
-  end
-
-  defp total_entries(query, repo) do
-    stripped_query = query
-    |> exclude(:order_by)
-    |> exclude(:preload)
-    |> exclude(:select)
-
-    {query_sql, parameters} =  Ecto.Adapters.SQL.to_sql(:all, repo, stripped_query)
-    {:ok, %{num_rows: 1, rows: [[count]]}} = Ecto.Adapters.SQL.query(repo, "SELECT count(*) FROM (#{query_sql}) AS temp", parameters)
-
-    count
-  end
-
-  defp total_pages(total_entries, page_size) do
-    ceiling(total_entries / page_size)
+  @spec paginate(any, Ecto.Repo.t, Keyword.t, map | Keyword.t) :: Scrivener.Page.t
+  def paginate(pageable, module, defaults, opts) do
+    paginate(pageable, Scrivener.Config.new(module, defaults, opts))
   end
 end
