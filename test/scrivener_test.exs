@@ -142,9 +142,9 @@ defmodule ScrivenerTest do
       posts = create_posts
 
       config = %Scrivener.Config{
+        module: Scrivener.Repo,
         page_number: 2,
-        page_size: 4,
-        repo: Scrivener.Repo
+        page_size: 4
       }
 
       page = Post
