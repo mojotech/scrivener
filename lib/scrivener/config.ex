@@ -14,27 +14,32 @@ defmodule Scrivener.Config do
   @type t :: %__MODULE__{}
 
   @doc false
-  def new(module, defaults, opts) when is_list(opts) do
-    opts = Enum.reduce(opts, %{}, fn {k, v}, map ->
-      Map.put(map, to_string(k), v)
-    end)
-
-    new(module, defaults, opts)
-  end
-
-  @doc false
-  def new(module, defaults, opts) when is_map(opts) do
-    page_number = opts["page"] |> to_int(1)
+  def new(module, defaults, options) do
+    options = normalize_options(options)
+    page_number = options["page"] |> to_int(1)
 
     %Scrivener.Config{
       module: module,
       page_number: page_number,
-      page_size: page_size(defaults, opts)
+      page_size: page_size(defaults, options)
     }
+  end
+
+  @doc false
+  def new(options) do
+    options = normalize_options(options)
+
+    new(options["module"], [], options)
   end
 
   defp default_page_size(defaults) do
     defaults[:page_size] || 10
+  end
+
+  defp normalize_options(options) do
+    Enum.reduce(options, %{}, fn {k, v}, map ->
+      Map.put(map, to_string(k), v)
+    end)
   end
 
   def page_size(defaults, opts) do
