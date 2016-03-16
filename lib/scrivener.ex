@@ -69,7 +69,7 @@ defmodule Scrivener do
 
       @spec paginate(any, map | Keyword.t) :: Scrivener.Page.t
       def paginate(pageable, options \\ []) do
-        Scrivener.paginate(pageable, __MODULE__, @scrivener_defaults, options)
+        Scrivener.paginate(pageable, Scrivener.Config.new(__MODULE__, @scrivener_defaults, options))
       end
     end
   end
@@ -88,30 +88,12 @@ defmodule Scrivener do
       |> Scrivener.paginate(config)
   """
   @spec paginate(any, Scrivener.Config.t) :: Scrivener.Page.t
-  def paginate(pageable, config) do
+  def paginate(pageable, %Scrivener.Config{} = config) do
     Scrivener.Paginater.paginate(pageable, config)
   end
 
-  @doc """
-  This method is not meant to be called directly, but rather will be delegated to by calling `paginate/2` on the repository that `use`s Scrivener.
-
-      defmodule MyApp.Repo do
-        use Ecto.Repo, ...
-        use Scrivener
-      end
-
-      MyApp.Model |> where([m], m.field == "value") |> MyApp.Repo.paginate
-
-  When calling your repo's `paginate` function, you may optionally specify `page` and `page_size`. These values can be specified either as a Keyword or map. The values should be integers or string representations of integers.
-
-      MyApp.Model |> where([m], m.field == "value") |> MyApp.Repo.paginate(page: 2, page_size: 10)
-
-      MyApp.Model |> where([m], m.field == "value") |> MyApp.Repo.paginate(%{"page" => "2", "page_size" => "10"})
-
-  The ability to call paginate with a map with string key/values is convenient because you can pass your Phoenix params map to paginate.
-  """
-  @spec paginate(any, Ecto.Repo.t, Keyword.t, map | Keyword.t) :: Scrivener.Page.t
-  def paginate(pageable, module, defaults, opts) do
-    paginate(pageable, Scrivener.Config.new(module, defaults, opts))
+  @spec paginate(any, map | Keyword.t) :: Scrivener.Page.t
+  def paginate(pageable, options) do
+    Scrivener.paginate(pageable, Scrivener.Config.new(options))
   end
 end

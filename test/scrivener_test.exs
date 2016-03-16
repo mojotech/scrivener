@@ -138,25 +138,6 @@ defmodule ScrivenerTest do
       assert page.page_size == 10
     end
 
-    it "can be provided a Scrivener.Config directly" do
-      posts = create_posts
-
-      config = %Scrivener.Config{
-        module: Scrivener.Repo,
-        page_number: 2,
-        page_size: 4
-      }
-
-      page = Post
-      |> Post.published
-      |> Scrivener.paginate(config)
-
-      assert page.page_size == 4
-      assert page.page_number == 2
-      assert page.entries == Enum.drop(posts, 4)
-      assert page.total_pages == 2
-    end
-
     it "can be used on a table with any primary key" do
       create_key_values
 
@@ -177,6 +158,51 @@ defmodule ScrivenerTest do
       |> Scrivener.Repo.paginate
 
       assert page.total_entries == 7
+    end
+
+    it "can be provided a Scrivener.Config directly" do
+      posts = create_posts
+
+      config = %Scrivener.Config{
+        module: Scrivener.Repo,
+        page_number: 2,
+        page_size: 4
+      }
+
+      page = Post
+      |> Post.published
+      |> Scrivener.paginate(config)
+
+      assert page.page_size == 4
+      assert page.page_number == 2
+      assert page.entries == Enum.drop(posts, 4)
+      assert page.total_pages == 2
+    end
+
+    it "can be provided a keyword directly" do
+      posts = create_posts
+
+      page = Post
+      |> Post.published
+      |> Scrivener.paginate(module: Scrivener.Repo, page: 2, page_size: 4)
+
+      assert page.page_size == 4
+      assert page.page_number == 2
+      assert page.entries == Enum.drop(posts, 4)
+      assert page.total_pages == 2
+    end
+
+    it "can be provided a map directly" do
+      posts = create_posts
+
+      page = Post
+      |> Post.published
+      |> Scrivener.paginate(%{"module" => Scrivener.Repo, "page" => 2, "page_size" => 4})
+
+      assert page.page_size == 4
+      assert page.page_number == 2
+      assert page.entries == Enum.drop(posts, 4)
+      assert page.total_pages == 2
     end
 
     it "can be used with nested joins" do
