@@ -1,6 +1,6 @@
 language: elixir
 otp_release:
-  - 18.2
+  - 18.3
 elixir:
   - 1.2.3
 before_script:
