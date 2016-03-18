@@ -61,7 +61,7 @@ Add `scrivener` to your `mix.exs` dependencies.
 
 ```elixir
 defp deps do
-  [{:scrivener, "~> 1.0"}]
+  [{:scrivener, "~> 2.0"}]
 end
 ```
 
