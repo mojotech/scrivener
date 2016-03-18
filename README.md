@@ -19,7 +19,7 @@ end
 
 ```elixir
 defmodule MyApp.Person do
-  use Ecto.Model
+  use Ecto.Schema
 
   schema "people" do
     field :name, :string
