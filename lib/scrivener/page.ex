@@ -2,7 +2,7 @@ defmodule Scrivener.Page do
   @moduledoc """
   A `Scrivener.Page` has 5 fields that can be accessed: `entries`, `page_number`, `page_size`, `total_entries` and `total_pages`.
 
-      page = MyApp.Person |> where([p], p.age > 30) |> MyApp.Repo.paginate(params)
+      page = MyApp.Module.paginate(params)
 
       page.entries
       page.page_number
