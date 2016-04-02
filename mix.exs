@@ -7,7 +7,7 @@ defmodule Scrivener.Mixfile do
       version: "2.0.0-dev",
       elixir: "~> 1.0",
       package: package,
-      description: "Paginate your Ecto queries",
+      description: "Pagination for the Elixir ecosystem",
       deps: deps,
       docs: [
         main: Scrivener,
