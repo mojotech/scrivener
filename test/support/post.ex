@@ -8,6 +8,7 @@ defmodule Scrivener.Post do
     field :published, :boolean
 
     has_many :comments, Scrivener.Comment
+    has_many :authors, through: [:comments, :author]
 
     timestamps
   end

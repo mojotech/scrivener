@@ -93,16 +93,14 @@ defmodule Scrivener do
       |> Scrivener.paginate(config)
   """
   @spec paginate(Ecto.Query.t, Scrivener.Config.t) :: Scrivener.Page.t
-  def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
-    total_entries = total_entries(query, repo)
+  def paginate(query, config) do
+    enforce_query = Ecto.Queryable.to_query(query)
 
-    %Page{
-      page_size: page_size,
-      page_number: page_number,
-      entries: entries(query, repo, page_number, page_size),
-      total_entries: total_entries,
-      total_pages: total_pages(total_entries, page_size)
-    }
+    if(enforce_query.joins == []) do
+      paginate_no_joins(query, config)
+    else
+      paginate_with_joins(query, config)
+    end
   end
 
   @doc """
@@ -126,6 +124,64 @@ defmodule Scrivener do
   @spec paginate(Ecto.Repo.t, Keyword.t, Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
   def paginate(repo, defaults, query, opts) do
     paginate(query, Config.new(repo, defaults, opts))
+  end
+
+  defp paginate_no_joins(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
+    total_entries = total_entries(query, repo)
+
+    %Page{
+      page_size: page_size,
+      page_number: page_number,
+      entries: entries(query, repo, page_number, page_size),
+      total_entries: total_entries,
+      total_pages: total_pages(total_entries, page_size)
+    }
+  end
+
+  defp paginate_with_joins(query, config) do
+    # First, find out the ids of the things we want instead
+    stripped_query = query
+                     |> exclude(:select)
+                     |> exclude(:preload)
+                     |> exclude(:group_by)
+
+    offset = config.page_size * (config.page_number-1)
+    page_size = config.page_size
+
+    # The group_by is needed to de-duplicate. "distinct" doesnt work
+    # because the postgres driver adds the distinct column to the order_by
+    # clause, which destroys the original ordering of the query.
+    ids = stripped_query
+          |> select([x], {x.id})
+          |> group_by([x], x.id)
+          |> offset(^offset)
+          |> limit(^page_size)
+          |> config.repo.all
+
+
+    # Then find the actual results using the ids as selectors instead of
+    # offset & limit
+    as_ungrouped_ids = Enum.map(ids, fn {str_id} -> str_id end)
+
+    entries = query
+              |> where([x], x.id in ^as_ungrouped_ids)
+              |> distinct(true)
+              |> config.repo.all
+
+    # We also need the total count, so we find it out
+    count = stripped_query
+            |> exclude(:order_by)
+            |> select([x], count(x.id, :distinct))
+            |> config.repo.one!
+
+    # Then we create the Scrivener-compatible page
+    %Scrivener.Page{
+      page_size: config.page_size,
+      page_number: config.page_number,
+      entries: entries,
+      total_entries: count,
+      total_pages: total_pages(count, config.page_size)
+    }
   end
 
   defp ceiling(float) do
