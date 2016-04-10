@@ -178,12 +178,11 @@ defmodule ScrivenerTest do
       |> order_by([p], desc: p.body)
       |> Scrivener.Repo.paginate(%{"page_size" => 2})
 
-      first = List.first(page.entries)
-      second = Enum.at(page.entries, 1)
+      [first, second] = page.entries
 
-      assert Enum.count(page.entries) == 2
       assert page.total_entries == 3
       assert Enum.count(first.comments) == 3
+
       assert first.body == "Body 3"
       assert second.body == "Body 2"
     end
