@@ -1,6 +1,8 @@
 # Changelog
 
-## 1.2.0-dev
+## 1.1.3
+
+* Correctly handle nested joins
 
 ## 1.1.2
 
