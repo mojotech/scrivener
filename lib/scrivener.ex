@@ -177,9 +177,10 @@ defmodule Scrivener do
   end
 
   defp total_entries(query, repo) do
-    [primary_key|_] = query.from
+    primary_key = query.from
     |> elem(1)
     |> apply(:__schema__, [:primary_key])
+    |> hd
 
     query
     |> remove_clauses
