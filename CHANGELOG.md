@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4
+
+* Correctly paginate unconstrained queries
+
 ## 1.1.3
 
 * Correctly handle nested joins

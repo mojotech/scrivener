@@ -4,7 +4,7 @@ defmodule Scrivener.Mixfile do
   def project do
     [
       app: :scrivener,
-      version: "1.1.3",
+      version: "1.1.4",
       elixir: "~> 1.0",
       elixirc_paths: elixirc_paths(Mix.env),
       package: package,
