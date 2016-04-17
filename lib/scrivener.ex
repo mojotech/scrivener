@@ -94,6 +94,7 @@ defmodule Scrivener do
   """
   @spec paginate(Ecto.Query.t, Scrivener.Config.t) :: Scrivener.Page.t
   def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
+    query = Ecto.Queryable.to_query(query)
     total_entries = total_entries(query, repo)
 
     %Page{

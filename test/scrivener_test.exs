@@ -65,6 +65,17 @@ defmodule ScrivenerTest do
   end
 
   describe "paginate" do
+    it "paginates the simplest query" do
+      create_posts
+
+      page = Post |> Scrivener.Repo.paginate
+
+      assert page.page_size == 5
+      assert page.page_number == 1
+      assert page.total_entries == 7
+      assert page.total_pages == 2
+    end
+
     it "uses defaults from the repo" do
       posts = create_posts
 
