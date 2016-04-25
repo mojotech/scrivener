@@ -6,5 +6,7 @@ config :scrivener, Scrivener.Repo,
   database: "scrivener_test",
   username: System.get_env("SCRIVENER_DB_USER") || System.get_env("USER")
 
+config :scrivener, ecto_repos: [Scrivener.Repo]
+
 config :logger, :console,
   level: :error

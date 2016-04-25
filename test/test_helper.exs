@@ -9,11 +9,11 @@ defmodule Scrivener.TestCase do
   end
 
   setup do
-    Ecto.Adapters.SQL.begin_test_transaction(Scrivener.Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(Scrivener.Repo, :manual)
 
-    ExUnit.Callbacks.on_exit(fn ->
-      Ecto.Adapters.SQL.rollback_test_transaction(Scrivener.Repo)
-    end)
+
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Scrivener.Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(Scrivener.Repo, {:shared, self()})
   end
 end
 
