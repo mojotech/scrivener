@@ -197,5 +197,19 @@ defmodule ScrivenerTest do
       assert first.body == "Body 3"
       assert second.body == "Body 2"
     end
+
+    it "returns enumerable page" do
+      create_posts
+
+      page = Post
+      |> Post.published
+      |> Scrivener.Repo.paginate
+
+      assert Enum.count(page) == 5
+
+      Enum.each(page, fn(post) ->
+        assert post.published == true
+      end)
+    end
   end
 end
