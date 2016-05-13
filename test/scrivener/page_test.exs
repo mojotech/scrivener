@@ -1,29 +1,37 @@
-defmodule Scrivener.Page do
+defmodule Scrivener.PageTest do
   use Scrivener.TestCase
 
   alias Scrivener.Page
   alias Scrivener.Post
 
   describe "enumerable protocol implementation" do
-    context "when entries field is missing" do
-      it "considers page to be an empty collection" do
-        page = Map.delete(%Page{}, :entries)
+    describe "reduce" do
+      it "reduces entries collection" do
+        page = %Page{entries: [%Post{published: false}, %Post{published: true}]}
 
-        assert Enum.count(page) == 0
+        posts = Enum.reduce(page, [], fn
+          (%{published: true} = post, acc) -> [post|acc]
+          (%{published: false}, acc) -> acc
+        end)
+
+        assert Enum.all?(posts, fn(post) -> post.published end)
       end
     end
 
-    context "when entries field is nil" do
-      it "considers page to be an empty collection" do
-        assert Enum.count(%Page{}) == 0
+    describe "count" do
+      it "returns size of entries" do
+        assert Enum.count(%Page{entries: [%Post{}]}) == 1
+        assert Enum.count(%Page{entries: []}) == 0
       end
     end
 
-    context "when entries field is a list" do
-      it "considers page to be a collection" do
-        page = %Page{entries: [%Post{}, %Post{}]}
+    describe "member?" do
+      it "checks if value exists within entries" do
+        post = %Post{title: "Hola"}
+        page = %Page{entries: [post]}
 
-        assert Enum.count(page) == 2
+        assert Enum.member?(page, post)
+        refute Enum.member?(page, %Post{title: "Hello"})
       end
     end
   end

@@ -206,10 +206,8 @@ defmodule ScrivenerTest do
       |> Scrivener.Repo.paginate
 
       assert Enum.count(page) == 5
-
-      Enum.each(page, fn(post) ->
-        assert post.published == true
-      end)
+      refute Enum.member?(page, %Post{title: "Nonexistent"})
+      assert Enum.all?(page, fn(post) -> post.published end)
     end
   end
 end
