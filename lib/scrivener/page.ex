@@ -16,13 +16,9 @@ defmodule Scrivener.Page do
   @type t :: %__MODULE__{}
 
   defimpl Enumerable, for: Scrivener.Page do
-    def count(_page) do
-      {:error, __MODULE__}
-    end
+    def count(_page), do: {:error, __MODULE__}
 
-    def member?(_page, _value) do
-      {:error, __MODULE__}
-    end
+    def member?(_page, _value), do: {:error, __MODULE__}
 
     def reduce(%Scrivener.Page{entries: entries}, acc, fun) do
       Enumerable.reduce(entries, acc, fun)
