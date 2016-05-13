@@ -15,16 +15,17 @@ defmodule Scrivener.Page do
 
   @type t :: %__MODULE__{}
 
-  defimpl Enumerable, for: __MODULE__ do
-    alias Scrivener.Page
-
-    def reduce(%Page{entries: entries}, acc, fun) when is_list(entries) do
-      Enumerable.reduce(entries, acc, fun)
+  defimpl Enumerable, for: Scrivener.Page do
+    def count(_page) do
+      {:error, __MODULE__}
     end
 
-    def member?(%Page{entries: entries}, value),
-      do: {:ok, Enum.member?(entries, value)}
-    def count(%Page{entries: entries}),
-      do: {:ok, Enum.count(entries)}
+    def member?(_page, _value) do
+      {:error, __MODULE__}
+    end
+
+    def reduce(%Scrivener.Page{entries: entries}, acc, fun) do
+      Enumerable.reduce(entries, acc, fun)
+    end
   end
 end

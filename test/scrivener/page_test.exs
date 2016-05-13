@@ -4,35 +4,32 @@ defmodule Scrivener.PageTest do
   alias Scrivener.Page
   alias Scrivener.Post
 
-  describe "enumerable protocol implementation" do
-    describe "reduce" do
-      it "reduces entries collection" do
-        page = %Page{entries: [%Post{published: false}, %Post{published: true}]}
+  describe "reduce" do
+    it "reduces the entries" do
+      post1 = %Post{published: false}
+      post2 = %Post{published: true}
+      page = %Page{entries: [post1, post2]}
 
-        posts = Enum.reduce(page, [], fn
-          (%{published: true} = post, acc) -> [post|acc]
-          (%{published: false}, acc) -> acc
-        end)
+      [post] = Enum.filter(page, fn post -> post.published end)
 
-        assert Enum.all?(posts, fn(post) -> post.published end)
-      end
+      assert post == post2
     end
+  end
 
-    describe "count" do
-      it "returns size of entries" do
-        assert Enum.count(%Page{entries: [%Post{}]}) == 1
-        assert Enum.count(%Page{entries: []}) == 0
-      end
+  describe "count" do
+    it "returns size of entries" do
+      assert Enum.count(%Page{entries: [%Post{}]}) == 1
+      assert Enum.count(%Page{entries: []}) == 0
     end
+  end
 
-    describe "member?" do
-      it "checks if value exists within entries" do
-        post = %Post{title: "Hola"}
-        page = %Page{entries: [post]}
+  describe "member?" do
+    it "checks if value exists within entries" do
+      post = %Post{title: "Hola"}
+      page = %Page{entries: [post]}
 
-        assert Enum.member?(page, post)
-        refute Enum.member?(page, %Post{title: "Hello"})
-      end
+      assert Enum.member?(page, post)
+      refute Enum.member?(page, %Post{title: "Hello"})
     end
   end
 end
