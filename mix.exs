@@ -24,7 +24,7 @@ defmodule Scrivener.Mixfile do
 
   defp deps do
     [
-      {:dialyze, "~> 0.2.0", only: :dev},
+      {:dialyxir, "~> 0.3.0", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.11.0", only: :dev},
       {:ex_spec, "~> 1.0", only: :test}
