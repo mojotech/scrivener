@@ -1,9 +1,9 @@
 # Changelog
 
-## 1.1.5
+## 1.2.0
 
-* Fix Ecto `1.0.x` compatiblity bug
 * Implement Enumerable protocol for `Scrivener.Page`
+* Fix Ecto `1.0.x` compatiblity bug
 
 ## 1.1.4
 
