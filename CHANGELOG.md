@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0-dev
+
+* Introduce `Scrivener.Paginater` protocol
+* Extract `Scrivener.Ecto`
+
 ## 1.2.0
 
 * Implement Enumerable protocol for `Scrivener.Page`
