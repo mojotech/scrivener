@@ -4,6 +4,10 @@
 
 * Implement Enumerable protocol for Scrivener.Page
 
+## 1.1.5
+
+* Fix Ecto `1.0.x` compatiblity bug
+
 ## 1.1.4
 
 * Correctly paginate unconstrained queries
