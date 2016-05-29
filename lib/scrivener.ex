@@ -149,8 +149,8 @@ defmodule Scrivener do
       |> remove_clauses
       |> select([x], {x.id})
       |> group_by([x], x.id)
-      |> offset(^offset)
-      |> limit(^page_size)
+      |> offset([_], ^offset)
+      |> limit([_], ^page_size)
       |> repo.all
       |> Enum.map(&elem(&1, 0))
 
