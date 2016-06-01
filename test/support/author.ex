@@ -1,5 +1,5 @@
 defmodule Scrivener.Author do
-  use Ecto.Model
+  use Ecto.Schema
 
   schema "authors" do
     field :name, :string

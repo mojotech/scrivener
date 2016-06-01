@@ -64,6 +64,10 @@ defmodule ScrivenerTest do
     end)
   end
 
+  setup do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Scrivener.Repo)
+  end
+
   describe "paginate" do
     it "paginates the simplest query" do
       create_posts

@@ -1,5 +1,5 @@
 defmodule Scrivener.KeyValue do
-  use Ecto.Model
+  use Ecto.Schema
   import Ecto.Query
   @primary_key {:key, :string, autogenerate: false}
 
