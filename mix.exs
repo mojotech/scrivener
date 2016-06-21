@@ -10,8 +10,10 @@ defmodule Scrivener.Mixfile do
       description: "Pagination for the Elixir ecosystem",
       deps: deps,
       docs: [
-        main: Scrivener,
-        readme: "README.md"
+        main: "readme",
+        extras: [
+          "README.md"
+        ]
       ]
     ]
   end
