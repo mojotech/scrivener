@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0-dev
+## 2.0.0
 
 * Introduce `Scrivener.Paginater` protocol
 * Extract `Scrivener.Ecto`
