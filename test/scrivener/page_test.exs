@@ -4,7 +4,7 @@ defmodule Scrivener.PageTest do
   alias Scrivener.Page
 
   describe "enumerable" do
-    it "implements enumerable" do
+    test "implements enumerable" do
       post1 = %{title: "post 1"}
       post2 = %{title: "post 2"}
       page = %Page{entries: [post1, post2]}

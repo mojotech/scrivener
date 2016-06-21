@@ -3,7 +3,7 @@ defmodule Scrivener.TestCase do
 
   using(opts) do
     quote do
-      use ExSpec, unquote(opts)
+      use ExUnit.Case, unquote(opts)
     end
   end
 end
