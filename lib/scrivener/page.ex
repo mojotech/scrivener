@@ -2,7 +2,7 @@ defmodule Scrivener.Page do
   @moduledoc """
   A `Scrivener.Page` has 5 fields that can be accessed: `entries`, `page_number`, `page_size`, `total_entries` and `total_pages`.
 
-      page = MyApp.Person |> where([p], p.age > 30) |> MyApp.Repo.paginate(params)
+      page = MyApp.Module.paginate(params)
 
       page.entries
       page.page_number
@@ -16,13 +16,9 @@ defmodule Scrivener.Page do
   @type t :: %__MODULE__{}
 
   defimpl Enumerable, for: Scrivener.Page do
-    def count(_page) do
-      {:error, __MODULE__}
-    end
+    def count(_page), do: {:error, __MODULE__}
 
-    def member?(_page, _value) do
-      {:error, __MODULE__}
-    end
+    def member?(_page, _value), do: {:error, __MODULE__}
 
     def reduce(%Scrivener.Page{entries: entries}, acc, fun) do
       Enumerable.reduce(entries, acc, fun)

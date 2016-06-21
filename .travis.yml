@@ -2,7 +2,4 @@ language: elixir
 otp_release:
   - 18.2
 elixir:
-  - 1.2.3
-before_script:
-  - export SCRIVENER_DB_USER=postgres
-  - MIX_ENV=test mix scrivener.db.reset
+  - 1.2.6

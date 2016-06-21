@@ -1,61 +1,19 @@
 # Scrivener
 
-[![Build Status](https://travis-ci.org/drewolson/scrivener.svg)](https://travis-ci.org/drewolson/scrivener) [![Hex Version](http://img.shields.io/hexpm/v/scrivener.svg?style=flat)](https://hex.pm/packages/scrivener) [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/scrivener)
+[![Build Status](https://travis-ci.org/drewolson/scrivener.svg?branch=master)](https://travis-ci.org/drewolson/scrivener) [![Hex Version](http://img.shields.io/hexpm/v/scrivener.svg?style=flat)](https://hex.pm/packages/scrivener) [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/scrivener)
 
-**Note**: To use Scrivener with the upcoming Ecto 2.0 release, please see the [v2](https://github.com/drewolson/scrivener/tree/v2) branch and [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto).
+**Note**: You're probably looking for [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto). Have a look there first.
 
-Scrivener allows you to paginate your Ecto queries. It gives you useful information such as the total number of pages, the current page, and the current page's entries. It works nicely with Phoenix as well.
+Scrivener is a pagnation library for the Elixir ecosystem. You most likely won't use Scrivener directly, instead using a library that implements Scrivener's `Paginater` protocol for the type of data you're trying to paginate.
 
-First, you'll want to `use` Scrivener in your application's Repo. This will add a `paginate` function to your Repo. This `paginate` function expects to be called with, at a minimum, an Ecto query. It will then paginate the query and execute it, returning a `Scrivener.Page`. Defaults for `page_size` can be configued when you `use` Scrivener. If no `page_size` is provided, Scrivener will use `10` by default.
+The primary use for Scrivener is the pagination of Ecto queries. For more information, see [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto).
 
-You may also want to call `paginate` with a params map along with your query. If provided with a params map, Scrivener will use the values in the keys `"page"` and `"page_size"` before using any configured defaults.
+## Related Libraries
 
-## Example
-
-```elixir
-defmodule MyApp.Repo do
-  use Ecto.Repo, otp_app: :my_app
-  use Scrivener, page_size: 10
-end
-```
-
-```elixir
-defmodule MyApp.Person do
-  use Ecto.Model
-
-  schema "people" do
-    field :name, :string
-    field :age, :integer
-
-    has_many :friends, MyApp.Person
-  end
-end
-```
-
-```elixir
-def index(conn, params) do
-  page = MyApp.Person
-  |> where([p], p.age > 30)
-  |> order_by([p], desc: p.age)
-  |> preload(:friends)
-  |> MyApp.Repo.paginate(params)
-
-  render conn, :index,
-    people: page.entries,
-    page_number: page.page_number,
-    page_size: page.page_size,
-    total_pages: page.total_pages,
-    total_entries: page.total_entries
-end
-```
-
-```elixir
-page = MyApp.Person
-|> where([p], p.age > 30)
-|> order_by([p], desc: p.age)
-|> preload(:friends)
-|> MyApp.Repo.paginate(page: 2, page_size: 5)
-```
+* [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto) paginate your Ecto queries with Scrivener
+* [Scrivener.HTML](https://github.com/mgwidmann/scrivener_html) generates HTML output using Bootstrap or other frameworks
+* [Scrivener.Headers](https://github.com/doomspork/scrivener_headers) adds response headers for API pagination
+* [Scrivener.List](https://github.com/stephenmoloney/scrivener_list) allows pagination of a list
 
 ## Installation
 
@@ -63,26 +21,13 @@ Add `scrivener` to your `mix.exs` dependencies.
 
 ```elixir
 defp deps do
-  [{:scrivener, "~> 1.0"}]
+  [{:scrivener, "~> 2.0"}]
 end
 ```
 
-## Related Libraries
-
-* [Scrivener.HTML](https://github.com/mgwidmann/scrivener_html) generates HTML output using Bootstrap or other frameworks
-* [Scrivener.Headers](https://github.com/doomspork/scrivener_headers) adds response headers for API pagination
-
 ## Contributing
 
-First, you'll need to build the test database.
-
-```elixir
-MIX_ENV=test mix scrivener.db.reset
-```
-
-This task assumes you have postgres installed and that your current user can create / drop databases. If you'd prefer to use a different user, you can specify it with the environment variable `SCRIVENER_DB_USER`.
-
-With the database built, you can now run the tests.
+You can run the tests with the following command:
 
 ```elixir
 mix test
