@@ -4,7 +4,7 @@
 
 **Note**: You're probably looking for [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto). Have a look there first.
 
-Scrivener is a pagnation library for the Elixir ecosystem. You most likely won't use Scrivener directly, instead using a library that implements Scrivener's `Paginater` protocol for the type of data you're trying to paginate.
+Scrivener is a pagination library for the Elixir ecosystem. You most likely won't use Scrivener directly, instead using a library that implements Scrivener's `Paginater` protocol for the type of data you're trying to paginate.
 
 The primary use for Scrivener is the pagination of Ecto queries. For more information, see [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto).
 
