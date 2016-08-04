@@ -14,9 +14,14 @@ defmodule Scrivener.Config do
   @type t :: %__MODULE__{}
 
   @doc false
+  def new(module, defaults, nil) do
+    new(module, defaults, %{})
+  end
+
+  @doc false
   def new(module, defaults, options) do
     options = normalize_options(options)
-    page_number = options["page"] |> to_int(1)
+    page_number = options["page_number"] |> to_int(1)
 
     %Scrivener.Config{
       module: module,

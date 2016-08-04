@@ -4,6 +4,14 @@ defmodule Scrivener.ConfigTest do
   alias Scrivener.Config
 
   describe "new" do
+    test "can be provided options as nil" do
+      config = Config.new(:module, [], nil)
+
+      assert config.module == :module
+      assert config.page == 1
+      assert config.page_size == 10
+    end
+
     test "can be provided options as a keyword" do
       config = Config.new(:module, [], page: 2, page_size: 15)
 
