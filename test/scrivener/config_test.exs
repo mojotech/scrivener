@@ -8,7 +8,7 @@ defmodule Scrivener.ConfigTest do
       config = Config.new(:module, [], nil)
 
       assert config.module == :module
-      assert config.page == 1
+      assert config.page_number == 1
       assert config.page_size == 10
     end
 
