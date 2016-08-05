@@ -5,35 +5,43 @@ defmodule Scrivener.ConfigTest do
 
   describe "new" do
     test "can be provided options as a keyword" do
-      config = Config.new(:module, [], page_number: 1, page_size: 10)
+      config = Config.new(:module, [], page: 2, page_size: 15)
 
       assert config.module == :module
-      assert config.page_number == 1
-      assert config.page_size == 10
+      assert config.page_number == 2
+      assert config.page_size == 15
     end
 
     test "can be provided options as a map" do
-      config = Config.new(:module, [], %{"page_number" => 1, "page_size" => 10})
+      config = Config.new(:module, [], %{"page" => 2, "page_size" => 15})
 
       assert config.module == :module
-      assert config.page_number == 1
-      assert config.page_size == 10
+      assert config.page_number == 2
+      assert config.page_size == 15
     end
 
     test "converts page number and page size to integers" do
-      config = Config.new(:module, [], %{"page_number" => "1", "page_size" => "10"})
+      config = Config.new(:module, [], %{"page" => "2", "page_size" => "15"})
 
       assert config.module == :module
-      assert config.page_number == 1
-      assert config.page_size == 10
+      assert config.page_number == 2
+      assert config.page_size == 15
     end
 
     test "can be provided page size via defaults" do
-      config = Config.new(:module, [page_size: 10], %{"page_number" => "1"})
+      config = Config.new(:module, [page_size: 15], %{"page" => "2"})
 
       assert config.module == :module
-      assert config.page_number == 1
-      assert config.page_size == 10
+      assert config.page_number == 2
+      assert config.page_size == 15
+    end
+
+    test "can be created without defaults" do
+      config = Config.new(%{"module" => :module, "page" => "2", "page_size" => "15"})
+
+      assert config.module == :module
+      assert config.page_number == 2
+      assert config.page_size == 15
     end
   end
 end
