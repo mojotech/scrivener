@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.0-dev
+## 2.1.0
 
 * Allow `nil` to be passed as options to `paginate` function
 
