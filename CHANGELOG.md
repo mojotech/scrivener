@@ -2,6 +2,8 @@
 
 ## 2.1.0-dev
 
+* Allow `nil` to be passed as options to `paginate` function
+
 ## 2.0.0
 
 * Introduce `Scrivener.Paginater` protocol
