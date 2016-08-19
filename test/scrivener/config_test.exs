@@ -51,5 +51,13 @@ defmodule Scrivener.ConfigTest do
       assert config.page_number == 2
       assert config.page_size == 15
     end
+
+    test "can provide max_page_size option as a keyword" do
+      config = Config.new(:module, [max_page_size: 10], %{"page_size" => "15"})
+
+      assert config.module == :module
+      assert config.page_number == 1
+      assert config.page_size == 10
+    end
   end
 end
