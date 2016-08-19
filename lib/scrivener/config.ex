@@ -5,6 +5,7 @@ defmodule Scrivener.Config do
       %Scrivener.Config{
         page_number: 2,
         page_size: 5,
+        max_page_size: 50, # optional
         module: MyApp.Repo
       }
   """
