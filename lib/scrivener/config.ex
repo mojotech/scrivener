@@ -57,8 +57,9 @@ defmodule Scrivener.Config do
 
   defp to_int(:error, default), do: default
   defp to_int(nil, default), do: default
-  defp to_int({i, _}, _) when is_integer(i), do: i
-  defp to_int(i, _) when is_integer(i), do: i
+  defp to_int(i, default) when is_integer(i), do: to_int({i, nil}, default)
   defp to_int(s, default) when is_binary(s), do: s |> Integer.parse |> to_int(default)
+  defp to_int({i, _}, default) when is_integer(i) and i < 1, do: default
+  defp to_int({i, _}, _) when is_integer(i), do: i
   defp to_int(_, default), do: default
 end

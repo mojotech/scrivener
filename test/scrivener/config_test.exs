@@ -59,5 +59,13 @@ defmodule Scrivener.ConfigTest do
       assert config.page_number == 1
       assert config.page_size == 10
     end
+
+    test "defaults negative page size and page number appropriately" do
+      config = Config.new(%{"module" => :module, "page" => "-15", "page_size" => "-15"})
+
+      assert config.module == :module
+      assert config.page_number == 1
+      assert config.page_size == 10
+    end
   end
 end
