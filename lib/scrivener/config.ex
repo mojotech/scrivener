@@ -48,15 +48,16 @@ defmodule Scrivener.Config do
   end
 
   def page_number(opts) do
-    page = opts["page"] |> to_int(1)
-    Enum.max([page, 1])
+    opts["page"]
+    |> to_int(1)
+    |> max(1)
   end
 
   def page_size(defaults, opts) do
-    default_page_size = default_page_size(defaults)
-    requested_page_size = opts["page_size"] |> to_int(default_page_size)
-
-    min(requested_page_size, defaults[:max_page_size])
+    opts["page_size"]
+    |> to_int(default_page_size(defaults))
+    |> min(defaults[:max_page_size])
+    |> max(1)
   end
 
   defp to_int(:error, default), do: default
