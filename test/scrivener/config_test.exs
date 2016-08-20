@@ -59,5 +59,17 @@ defmodule Scrivener.ConfigTest do
       assert config.page_number == 1
       assert config.page_size == 10
     end
+
+    test "make sure page cannot be less than 1" do
+      config = Config.new(:module, [], %{"page" => "0"})
+
+      assert config.page_number == 1
+    end
+
+    test "make sure page_size cannot be less than 1" do
+      config = Config.new(:module, [max_page_size: 3], %{"page_size" => "0"})
+
+      assert config.page_size == 3
+    end
   end
 end

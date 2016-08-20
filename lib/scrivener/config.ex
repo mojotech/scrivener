@@ -22,11 +22,10 @@ defmodule Scrivener.Config do
   @doc false
   def new(module, defaults, options) do
     options = normalize_options(options)
-    page_number = options["page"] |> to_int(1)
 
     %Scrivener.Config{
       module: module,
-      page_number: page_number,
+      page_number: page_number(options),
       page_size: page_size(defaults, options)
     }
   end
@@ -48,12 +47,21 @@ defmodule Scrivener.Config do
     end)
   end
 
-  def page_size(defaults, opts) do
-    default_page_size = default_page_size(defaults)
-    requested_page_size = opts["page_size"] |> to_int(default_page_size)
-
-    min(requested_page_size, defaults[:max_page_size])
+  def page_number(opts) do
+    opts["page"]
+    |> to_int(1)
+    |> not_negative(1)
   end
+
+  def page_size(defaults, opts) do
+    opts["page_size"]
+    |> to_int(default_page_size(defaults))
+    |> min(defaults[:max_page_size])
+    |> not_negative(defaults[:max_page_size])
+  end
+
+  defp not_negative(num, default) when num < 1, do: default
+  defp not_negative(num, _default), do: num
 
   defp to_int(:error, default), do: default
   defp to_int(nil, default), do: default
