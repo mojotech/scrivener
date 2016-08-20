@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+* Handle negative values for `page` and `page_size` appropriately
+
 ## 2.1.0
 
 * Allow `nil` to be passed as options to `paginate` function
