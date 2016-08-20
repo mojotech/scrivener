@@ -1,11 +1,10 @@
 defmodule Scrivener.Config do
   @moduledoc """
-  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `module`. An optional `max_page_size` can also be included.
+  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `module`.
 
       %Scrivener.Config{
         page_number: 2,
         page_size: 5,
-        max_page_size: 50,
         module: MyApp.Repo
       }
   """
