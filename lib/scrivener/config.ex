@@ -4,6 +4,7 @@ defmodule Scrivener.Config do
 
       %Scrivener.Config{
         page_number: 2,
+        min_page_number: 1, # optional
         page_size: 5,
         max_page_size: 50, # optional
         module: MyApp.Repo
@@ -22,11 +23,10 @@ defmodule Scrivener.Config do
   @doc false
   def new(module, defaults, options) do
     options = normalize_options(options)
-    page_number = options["page"] |> to_int(1)
 
     %Scrivener.Config{
       module: module,
-      page_number: page_number,
+      page_number: page_number(defaults, options),
       page_size: page_size(defaults, options)
     }
   end
@@ -46,6 +46,15 @@ defmodule Scrivener.Config do
     Enum.reduce(options, %{}, fn {k, v}, map ->
       Map.put(map, to_string(k), v)
     end)
+  end
+
+  def page_number(defaults, opts) do
+    page = opts["page"] |> to_int(1)
+
+    case defaults[:min_page_number] do
+      nil -> page
+      n   -> Enum.max([page, n])
+    end
   end
 
   def page_size(defaults, opts) do
