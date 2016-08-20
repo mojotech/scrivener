@@ -50,15 +50,18 @@ defmodule Scrivener.Config do
   def page_number(opts) do
     opts["page"]
     |> to_int(1)
-    |> max(1)
+    |> not_negative(1)
   end
 
   def page_size(defaults, opts) do
     opts["page_size"]
     |> to_int(default_page_size(defaults))
     |> min(defaults[:max_page_size])
-    |> max(1)
+    |> not_negative(defaults[:max_page_size])
   end
+
+  defp not_negative(num, default) when num < 1, do: default
+  defp not_negative(num, _default), do: num
 
   defp to_int(:error, default), do: default
   defp to_int(nil, default), do: default
