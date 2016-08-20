@@ -59,5 +59,12 @@ defmodule Scrivener.ConfigTest do
       assert config.page_number == 1
       assert config.page_size == 10
     end
+
+    test "can provide min_page_number option as a keyword" do
+      config = Config.new(:module, [min_page_number: 1], %{"page" => "-1"})
+
+      assert config.module == :module
+      assert config.page_number == 1
+    end
   end
 end
