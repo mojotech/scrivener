@@ -22,11 +22,10 @@ defmodule Scrivener.Config do
   @doc false
   def new(module, defaults, options) do
     options = normalize_options(options)
-    page_number = options["page"] |> to_int(1)
 
     %Scrivener.Config{
       module: module,
-      page_number: page_number,
+      page_number: page_number(options),
       page_size: page_size(defaults, options)
     }
   end
@@ -46,6 +45,11 @@ defmodule Scrivener.Config do
     Enum.reduce(options, %{}, fn {k, v}, map ->
       Map.put(map, to_string(k), v)
     end)
+  end
+
+  def page_number(opts) do
+    page = opts["page"] |> to_int(1)
+    Enum.max([page, 1])
   end
 
   def page_size(defaults, opts) do
