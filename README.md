@@ -17,12 +17,16 @@ The primary use for Scrivener is the pagination of Ecto queries. For more inform
 
 ## Installation
 
-Add `scrivener` to your `mix.exs` dependencies.
+Add `scrivener` to your `mix.exs` `applications` and `dependencies`.
 
 ```elixir
-defp deps do
-  [{:scrivener, "~> 2.0"}]
+def application do
+  [applications: [:scrivener]]
 end
+```
+
+```elixir
+[{:scrivener, "~> 2.0"}]
 ```
 
 ## Contributing
