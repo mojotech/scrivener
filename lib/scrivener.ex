@@ -183,11 +183,14 @@ defmodule Scrivener do
     |> apply(:__schema__, [:primary_key])
     |> hd
 
-    query
-    |> remove_clauses
-    |> exclude(:order_by)
-    |> select([m], count(field(m, ^primary_key), :distinct))
-    |> repo.one!
+    total_entries =
+      query
+      |> remove_clauses
+      |> exclude(:order_by)
+      |> select([m], count(field(m, ^primary_key), :distinct))
+      |> repo.one
+
+    total_entries || 0
   end
 
   defp total_pages(total_entries, page_size) do
