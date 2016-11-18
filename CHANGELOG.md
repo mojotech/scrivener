@@ -13,6 +13,10 @@
 * Introduce `Scrivener.Paginater` protocol
 * Extract `Scrivener.Ecto`
 
+## 1.2.1
+
+* Support Ecto `~> 1.1`
+
 ## 1.2.0
 
 * Implement Enumerable protocol for `Scrivener.Page`
