@@ -13,6 +13,10 @@
 * Introduce `Scrivener.Paginater` protocol
 * Extract `Scrivener.Ecto`
 
+## 1.2.2
+
+* Gracefully handle no result when counting records
+
 ## 1.2.1
 
 * Support Ecto `~> 1.1`
