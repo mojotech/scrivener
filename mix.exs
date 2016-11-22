@@ -32,7 +32,7 @@ defmodule Scrivener.Mixfile do
       {:dialyze, "~> 0.2.0", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.11.0", only: :dev},
-      {:ex_spec, "~> 1.0", only: :test},
+      {:ex_spec, "~> 2.0", only: :test},
       {:postgrex, ">= 0.0.0", optional: true}
     ]
   end
