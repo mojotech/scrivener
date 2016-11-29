@@ -67,5 +67,28 @@ defmodule Scrivener.ConfigTest do
       assert config.page_number == 1
       assert config.page_size == 10
     end
+
+    test "can provide show_totals option as a keyword" do
+      config = Config.new(:module, [show_totals: true], %{"show_totals" => false})
+
+      assert config.module == :module
+      assert config.page_number == 1
+      assert config.page_size == 10
+      assert config.show_totals == false
+    end
+
+      test "defaults show_totals to true" do
+      config = Config.new(%{"module" => :module})
+
+      assert config.module == :module
+      assert config.show_totals == true
+    end
+
+    test "defaults non-boolean show_totals option appropriately" do
+      config = Config.new(%{"module" => :module, "show_totals" => "-15"})
+
+      assert config.module == :module
+      assert config.show_totals == true
+    end
   end
 end

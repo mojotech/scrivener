@@ -1,15 +1,17 @@
 defmodule Scrivener.Config do
   @moduledoc """
-  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `module`.
+  A `Scrivener.Config` can be created with a `page_number`, a `page_size`, a `module`
+  and  a `show_totals` option.
 
       %Scrivener.Config{
         page_number: 2,
         page_size: 5,
         module: MyApp.Repo
+        show_totals: false,
       }
   """
 
-  defstruct [:module, :page_number, :page_size]
+  defstruct [:module, :page_number, :page_size, :show_totals]
 
   @type t :: %__MODULE__{}
 
@@ -22,11 +24,13 @@ defmodule Scrivener.Config do
   def new(module, defaults, options) do
     options = normalize_options(options)
     page_number = options["page"] |> to_int(1)
+    show_totals = options["show_totals"] |> default_show_totals
 
     %Scrivener.Config{
       module: module,
       page_number: page_number,
-      page_size: page_size(defaults, options)
+      page_size: page_size(defaults, options),
+      show_totals: show_totals
     }
   end
 
@@ -53,6 +57,9 @@ defmodule Scrivener.Config do
 
     min(requested_page_size, defaults[:max_page_size])
   end
+
+  defp default_show_totals(bool) when is_boolean(bool), do: bool
+  defp default_show_totals(_), do: true
 
   defp to_int(:error, default), do: default
   defp to_int(nil, default), do: default
