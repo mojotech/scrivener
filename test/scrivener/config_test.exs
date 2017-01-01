@@ -60,6 +60,12 @@ defmodule Scrivener.ConfigTest do
       assert config.page_size == 10
     end
 
+    test "can provide arbitrary custom options in defaults" do
+      config = Config.new(:module, [options: [foo: "bar"]], %{})
+
+      assert config.options == [foo: "bar"]
+    end
+
     test "defaults negative page size and page number appropriately" do
       config = Config.new(%{"module" => :module, "page" => "-15", "page_size" => "-15"})
 

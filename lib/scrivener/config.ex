@@ -1,15 +1,18 @@
 defmodule Scrivener.Config do
   @moduledoc """
-  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `module`.
+  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `module`. It can optionally be provided a `Keyword` of `options`.
 
       %Scrivener.Config{
         page_number: 2,
         page_size: 5,
-        module: MyApp.Repo
+        module: MyApp.Repo,
+        options: [
+          foo: "bar"
+        ]
       }
   """
 
-  defstruct [:module, :page_number, :page_size]
+  defstruct [:module, :options, :page_number, :page_size]
 
   @type t :: %__MODULE__{}
 
@@ -25,8 +28,9 @@ defmodule Scrivener.Config do
 
     %Scrivener.Config{
       module: module,
+      options: Keyword.get(defaults, :options, []),
       page_number: page_number,
-      page_size: page_size(defaults, options)
+      page_size: page_size(defaults, options),
     }
   end
 

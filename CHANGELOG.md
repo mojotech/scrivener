@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0-dev
+
+* Add arbitrary `options` to `Scrivener.Config`
+
 ## 2.1.1
 
 * Handle negative values for `page` and `page_size` appropriately
