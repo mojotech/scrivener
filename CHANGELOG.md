@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0-dev
+## 2.2.0
 
 * Add arbitrary `options` to `Scrivener.Config`
 
