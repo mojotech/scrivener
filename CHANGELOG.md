@@ -2,6 +2,10 @@
 
 ## 2.3.0-dev
 
+## 2.2.1
+
+* Remove Elixir 1.4.0 warnings
+
 ## 2.2.0
 
 * Add arbitrary `options` to `Scrivener.Config`
