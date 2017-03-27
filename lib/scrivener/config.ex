@@ -1,8 +1,9 @@
 defmodule Scrivener.Config do
   @moduledoc """
-  A `Scrivener.Config` can be created with a `page_number`, a `page_size` and a `module`. It can optionally be provided a `Keyword` of `options`.
+  A `Scrivener.Config` can be created with a `caller`, a `page_number`, a `page_size` and a `module`. It can optionally be provided a `Keyword` of `options`.
 
       %Scrivener.Config{
+        caller: self(),
         page_number: 2,
         page_size: 5,
         module: MyApp.Repo,
@@ -12,7 +13,7 @@ defmodule Scrivener.Config do
       }
   """
 
-  defstruct [:module, :options, :page_number, :page_size]
+  defstruct [:caller, :module, :options, :page_number, :page_size]
 
   @type t :: %__MODULE__{}
 
@@ -27,6 +28,7 @@ defmodule Scrivener.Config do
     page_number = options["page"] |> to_int(1)
 
     %Scrivener.Config{
+      caller: Map.get(options, "caller", self()),
       module: module,
       options: Keyword.get(defaults, :options, []),
       page_number: page_number,

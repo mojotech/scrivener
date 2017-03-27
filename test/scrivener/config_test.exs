@@ -60,6 +60,20 @@ defmodule Scrivener.ConfigTest do
       assert config.page_size == 10
     end
 
+    test "caller is `self` if not provided" do
+      config = Config.new(:module, [], %{})
+
+      assert config.caller == self()
+    end
+
+    test "can be provided caller as an option" do
+      config1 = Config.new(:module, [], caller: "caller")
+      config2 = Config.new(:module, [], %{"caller" => "caller"})
+
+      assert config1.caller == "caller"
+      assert config2.caller == "caller"
+    end
+
     test "can provide arbitrary custom options in defaults" do
       config = Config.new(:module, [options: [foo: "bar"]], %{})
 
