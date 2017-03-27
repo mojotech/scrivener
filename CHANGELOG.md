@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.4.0-dev
+
 ## 2.3.0
 
 * Allow specifying `caller`
