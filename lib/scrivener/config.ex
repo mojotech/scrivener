@@ -25,7 +25,10 @@ defmodule Scrivener.Config do
   @doc false
   def new(module, defaults, options) do
     options = normalize_options(options)
-    page_number = options["page"] |> to_int(1)
+    page_number = case options["page"] do
+      "last" -> "last"
+      _ -> options["page"] |> to_int(1)
+    end
 
     %Scrivener.Config{
       caller: Map.get(options, "caller", self()),

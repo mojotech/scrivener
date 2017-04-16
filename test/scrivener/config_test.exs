@@ -36,6 +36,12 @@ defmodule Scrivener.ConfigTest do
       assert config.page_size == 15
     end
 
+    test "does not convert the special page number value of 'last' to an integer" do
+      config = Config.new(:module, [], %{"page" => "last"})
+
+      assert config.page_number == "last"
+    end
+
     test "can be provided page size via defaults" do
       config = Config.new(:module, [page_size: 15], %{"page" => "2"})
 
