@@ -13,7 +13,7 @@ defmodule Scrivener.Config do
       }
   """
 
-  defstruct [:caller, :module, :options, :page_number, :page_size]
+  defstruct [:caller, :module, :options, :page_number, :page_size, :last_seen_id]
 
   @type t :: %__MODULE__{}
 
@@ -26,6 +26,7 @@ defmodule Scrivener.Config do
   def new(module, defaults, options) do
     options = normalize_options(options)
     page_number = options["page"] |> to_int(1)
+    last_seen_id = options["last_seen_id"] |> to_int(1)
 
     %Scrivener.Config{
       caller: Map.get(options, "caller", self()),
@@ -33,6 +34,7 @@ defmodule Scrivener.Config do
       options: Keyword.get(defaults, :options, []),
       page_number: page_number,
       page_size: page_size(defaults, options),
+      last_seen_id: last_seen_id
     }
   end
 
