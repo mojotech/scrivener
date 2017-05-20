@@ -26,7 +26,7 @@ defmodule Scrivener.Config do
   def new(module, defaults, options) do
     options = normalize_options(options)
     page_number = options["page"] |> to_int(1)
-    last_seen_id = options["last_seen_id"] |> to_int(1)
+    last_seen_id = options["last_seen_id"] |> to_int(0)
 
     %Scrivener.Config{
       caller: Map.get(options, "caller", self()),
