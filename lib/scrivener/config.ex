@@ -30,7 +30,7 @@ defmodule Scrivener.Config do
     %Scrivener.Config{
       caller: Map.get(options, "caller", self()),
       module: module,
-      options: Keyword.get(defaults, :options, []),
+      options: merged_options(defaults, options),
       page_number: page_number,
       page_size: page_size(defaults, options),
     }
@@ -51,6 +51,16 @@ defmodule Scrivener.Config do
     Enum.reduce(options, %{}, fn {k, v}, map ->
       Map.put(map, to_string(k), v)
     end)
+  end
+
+  defp merged_options(defaults, options) do
+    default_opts = Keyword.get(defaults, :options, [])
+    opts =
+      options
+      |> Map.get("options", [])
+      |> Keyword.new
+
+    Keyword.merge(default_opts, opts)
   end
 
   def page_size(defaults, opts) do

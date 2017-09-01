@@ -80,6 +80,18 @@ defmodule Scrivener.ConfigTest do
       assert config.options == [foo: "bar"]
     end
 
+    test "can provide arbitrary custom options" do
+      config = Config.new(:module, [options: [foo: "bar", baz: "boom"]], %{options: [foo: "qux"]})
+
+      assert Enum.sort(config.options) == [baz: "boom", foo: "qux"]
+    end
+
+    test "can provide arbitrary custom as a map" do
+      config = Config.new(:module, [options: [foo: "bar", baz: "boom"]], %{options: %{foo: "qux"}})
+
+      assert Enum.sort(config.options) == [baz: "boom", foo: "qux"]
+    end
+
     test "defaults negative page size and page number appropriately" do
       config = Config.new(%{"module" => :module, "page" => "-15", "page_size" => "-15"})
 
