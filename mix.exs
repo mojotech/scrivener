@@ -38,7 +38,7 @@ defmodule Scrivener.Mixfile do
     [
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.16.0", only: :dev},
-      {:credo, "~> 0.7.4", only: [:dev, :test]},
+      {:credo, "~> 0.8.0", only: [:dev, :test]},
     ]
   end
 
