@@ -2,6 +2,8 @@
 
 ## 2.4.0-dev
 
+* Allow arbitrary `options` to be passed during the `paginate` call
+
 ## 2.3.0
 
 * Allow specifying `caller`
