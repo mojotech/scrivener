@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4.0-dev
+## 2.4.0
 
 * Allow arbitrary `options` to be passed during the `paginate` call
 
