@@ -9,21 +9,11 @@ defmodule Scrivener.Mixfile do
       package: package(),
       description: "Pagination for the Elixir ecosystem",
       deps: deps(),
-      aliases: aliases(),
       docs: [
         main: "readme",
         extras: [
           "README.md"
         ]
-      ]
-    ]
-  end
-
-  defp aliases do
-    [
-      "ci": [
-        "test",
-        "credo"
       ]
     ]
   end
@@ -37,8 +27,7 @@ defmodule Scrivener.Mixfile do
   defp deps do
     [
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, "~> 0.16.0", only: :dev},
-      {:credo, "~> 0.8.0", only: [:dev, :test]},
+      {:ex_doc, "~> 0.16.0", only: :dev}
     ]
   end
 
