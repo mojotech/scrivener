@@ -87,7 +87,8 @@ defmodule Scrivener.ConfigTest do
     end
 
     test "can provide arbitrary custom as a map" do
-      config = Config.new(:module, [options: [foo: "bar", baz: "boom"]], %{options: %{foo: "qux"}})
+      config =
+        Config.new(:module, [options: [foo: "bar", baz: "boom"]], %{options: %{foo: "qux"}})
 
       assert Enum.sort(config.options) == [baz: "boom", foo: "qux"]
     end

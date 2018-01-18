@@ -32,7 +32,7 @@ defmodule Scrivener.Config do
       module: module,
       options: merged_options(defaults, options),
       page_number: page_number,
-      page_size: page_size(defaults, options),
+      page_size: page_size(defaults, options)
     }
   end
 
@@ -55,10 +55,11 @@ defmodule Scrivener.Config do
 
   defp merged_options(defaults, options) do
     default_opts = Keyword.get(defaults, :options, [])
+
     opts =
       options
       |> Map.get("options", [])
-      |> Keyword.new
+      |> Keyword.new()
 
     Keyword.merge(default_opts, opts)
   end
@@ -72,7 +73,7 @@ defmodule Scrivener.Config do
 
   defp to_int(:error, default), do: default
   defp to_int(nil, default), do: default
-  defp to_int(b, default) when is_binary(b), do: b |> Integer.parse |> to_int(default)
+  defp to_int(b, default) when is_binary(b), do: b |> Integer.parse() |> to_int(default)
   defp to_int(i, default) when is_integer(i), do: to_int({i, nil}, default)
   defp to_int({i, _}, default) when is_integer(i) and i < 1, do: default
   defp to_int({i, _}, _) when is_integer(i), do: i
