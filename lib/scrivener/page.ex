@@ -23,5 +23,7 @@ defmodule Scrivener.Page do
     def reduce(%Scrivener.Page{entries: entries}, acc, fun) do
       Enumerable.reduce(entries, acc, fun)
     end
+
+    def slice(_page), do: {:error, __MODULE__}
   end
 end
