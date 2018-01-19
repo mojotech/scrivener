@@ -4,7 +4,7 @@ defmodule Scrivener.Mixfile do
   def project do
     [
       app: :scrivener,
-      version: "2.5.0",
+      version: "2.6.0-dev",
       elixir: "~> 1.2",
       package: package(),
       description: "Pagination for the Elixir ecosystem",

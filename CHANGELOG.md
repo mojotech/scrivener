@@ -1,5 +1,7 @@
 # Changelog
 
+## 2.6.0-dev
+
 ## 2.5.0
 
 * Implement `slice` for `Scrivener.Page`
