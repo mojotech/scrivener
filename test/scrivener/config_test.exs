@@ -28,12 +28,22 @@ defmodule Scrivener.ConfigTest do
       assert config.page_size == 15
     end
 
-    test "converts page number and page size to integers" do
+    test "converts page number, page size and offset to integers" do
+      config = Config.new(:module, [], %{"page" => "2", "page_size" => "15", "offset" => "2"})
+
+      assert config.module == :module
+      assert config.page_number == 2
+      assert config.page_size == 15
+      assert config.offset == 2
+    end
+
+    test "can be created without offset and offset will be nil" do
       config = Config.new(:module, [], %{"page" => "2", "page_size" => "15"})
 
       assert config.module == :module
       assert config.page_number == 2
       assert config.page_size == 15
+      assert config.offset == nil
     end
 
     test "can be provided page size via defaults" do
