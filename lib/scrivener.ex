@@ -23,6 +23,7 @@ defmodule Scrivener do
   defmacro __using__(opts) do
     quote do
       @scrivener_defaults unquote(opts)
+      def scrivener_defaults, do: @scrivener_defaults
 
       @spec paginate(any, map | Keyword.t()) :: Scrivener.Page.t()
       def paginate(pageable, options \\ []) do
