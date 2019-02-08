@@ -13,5 +13,9 @@ defmodule Scrivener.PageTest do
 
       assert titles == ["post 1", "post 2"]
     end
+
+    test "behaviour when empty" do
+      assert [] = Enum.map(%Page{}, &Map.get(&1, :title))
+    end
   end
 end
