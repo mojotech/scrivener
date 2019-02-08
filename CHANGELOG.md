@@ -2,6 +2,8 @@
 
 ## 2.6.0-dev
 
+* Implement `Collectable` for `Scrivener.Page`
+
 ## 2.5.0
 
 * Implement `slice` for `Scrivener.Page`
