@@ -31,4 +31,20 @@ defmodule Scrivener.Page do
     @spec slice(Scrivener.Page.t()) :: {:error, Enumerable.Scrivener.Page}
     def slice(_page), do: {:error, __MODULE__}
   end
+
+  defimpl Collectable do
+    @spec into(Scrivener.Page.t()) ::
+            {term, (term, Collectable.command() -> Scrivener.Page.t() | term)}
+    def into(original) do
+      original_entries = original.entries
+      impl = Collectable.impl_for(original_entries)
+      {_, entries_fun} = impl.into(original_entries)
+
+      fun = fn page, command ->
+        %{page | entries: entries_fun.(page.entries, command)}
+      end
+
+      {original, fun}
+    end
+  end
 end

@@ -18,4 +18,11 @@ defmodule Scrivener.PageTest do
       assert [] = Enum.map(%Page{}, &Map.get(&1, :title))
     end
   end
+
+  describe "collectable" do
+    post1 = %{title: "post 1"}
+    post2 = %{title: "post 2"}
+
+    assert %Page{entries: [^post1, ^post2]} = Enum.into([post1, post2], %Page{})
+  end
 end
