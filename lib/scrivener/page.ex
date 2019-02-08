@@ -15,15 +15,20 @@ defmodule Scrivener.Page do
 
   @type t :: %__MODULE__{}
 
-  defimpl Enumerable, for: Scrivener.Page do
+  defimpl Enumerable do
+    @spec count(Scrivener.Page.t()) :: {:error, Enumerable.Scrivener.Page}
     def count(_page), do: {:error, __MODULE__}
 
+    @spec member?(Scrivener.Page.t(), term) :: {:error, Enumerable.Scrivener.Page}
     def member?(_page, _value), do: {:error, __MODULE__}
 
+    @spec reduce(Scrivener.Page.t(), Enumerable.acc(), Enumerable.reducer()) ::
+            Enumerable.result()
     def reduce(%Scrivener.Page{entries: entries}, acc, fun) do
       Enumerable.reduce(entries, acc, fun)
     end
 
+    @spec slice(Scrivener.Page.t()) :: {:error, Enumerable.Scrivener.Page}
     def slice(_page), do: {:error, __MODULE__}
   end
 end
