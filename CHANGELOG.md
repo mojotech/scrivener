@@ -2,6 +2,8 @@
 
 ## 2.7.0-dev
 
+* Add `scrivener_defaults` function
+
 ## 2.6.0
 
 * Implement `Collectable` for `Scrivener.Page`
