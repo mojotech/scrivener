@@ -13,7 +13,13 @@ defmodule Scrivener.Page do
 
   defstruct [:page_number, :page_size, :total_entries, :total_pages, entries: []]
 
-  @type t :: %__MODULE__{}
+  @type t :: %__MODULE__{
+          entries: list(),
+          page_number: pos_integer(),
+          page_size: integer(),
+          total_entries: integer(),
+          total_pages: pos_integer()
+        }
 
   defimpl Enumerable do
     @spec count(Scrivener.Page.t()) :: {:error, Enumerable.Scrivener.Page}
