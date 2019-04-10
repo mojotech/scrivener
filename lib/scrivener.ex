@@ -38,13 +38,12 @@ defmodule Scrivener do
   end
 
   @doc false
-  @spec paginate(any, Scrivener.Config.t()) :: Scrivener.Page.t()
+  @spec paginate(any, map | Keyword.t()) :: Scrivener.Page.t()
   def paginate(pageable, %Scrivener.Config{} = config) do
     Scrivener.Paginater.paginate(pageable, config)
   end
 
   @doc false
-  @spec paginate(any, map | Keyword.t()) :: Scrivener.Page.t()
   def paginate(pageable, options) do
     Scrivener.paginate(pageable, Scrivener.Config.new(options))
   end
