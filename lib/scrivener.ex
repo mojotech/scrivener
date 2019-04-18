@@ -1,6 +1,6 @@
 defmodule Scrivener do
   @moduledoc """
-  Scrivener is a pagnation library for the Elixir ecosystem. You most likely won't use Scrivener directly, but rather a library that implements Scrivener's Paginater protocol for the object you're trying to paginate.
+  Scrivener is a pagination library for the Elixir ecosystem. You most likely won't use Scrivener directly, but rather a library that implements Scrivener's Paginater protocol for the object you're trying to paginate.
   """
 
   @doc """
