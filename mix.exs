@@ -9,6 +9,7 @@ defmodule Scrivener.Mixfile do
       package: package(),
       description: "Pagination for the Elixir ecosystem",
       deps: deps(),
+      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs"],
       docs: [
         main: "readme",
         extras: [
@@ -27,7 +28,8 @@ defmodule Scrivener.Mixfile do
   defp deps do
     [
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, "~> 0.19.0", only: :dev}
+      {:ex_doc, "~> 0.19.0", only: :dev},
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
     ]
   end
 
