@@ -8,6 +8,11 @@ Scrivener is a pagination library for the Elixir ecosystem. You most likely won'
 
 The primary use for Scrivener is the pagination of Ecto queries. For more information, see [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto).
 
+## Low Maintenance Warning
+
+This library is in low maintenance mode, which means the author is currently
+only responding to pull requests and breaking issues.
+
 ## Related Libraries
 
 * [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto) paginate your Ecto queries with Scrivener
