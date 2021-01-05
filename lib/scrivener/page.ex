@@ -20,6 +20,13 @@ defmodule Scrivener.Page do
           total_entries: integer(),
           total_pages: pos_integer()
         }
+  @type t(entry) :: %__MODULE__{
+          entries: list(entry),
+          page_number: pos_integer(),
+          page_size: integer(),
+          total_entries: integer(),
+          total_pages: pos_integer()
+        }
 
   defimpl Enumerable do
     @spec count(Scrivener.Page.t()) :: {:error, Enumerable.Scrivener.Page}
