@@ -6,6 +6,7 @@ defmodule Scrivener.Mixfile do
       app: :scrivener,
       version: "2.7.0",
       elixir: "~> 1.2",
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       description: "Pagination for the Elixir ecosystem",
       deps: deps(),
@@ -24,6 +25,9 @@ defmodule Scrivener.Mixfile do
       extra_applications: [:logger]
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
     [
