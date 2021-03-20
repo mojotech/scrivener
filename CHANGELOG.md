@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1
+
+* Improve type specs
+
 ## 2.7.0
 
 * Add `scrivener_defaults` function
