@@ -1,8 +1,0 @@
-language: elixir
-otp_release:
-  - 23.0
-elixir:
-  - 1.10.3
-script:
-  - mix test
-  - mix format --check-formatted

@@ -1,6 +1,6 @@
 # Scrivener
 
-[![Build Status](https://travis-ci.org/drewolson/scrivener.svg?branch=master)](https://travis-ci.org/drewolson/scrivener) [![Hex Version](http://img.shields.io/hexpm/v/scrivener.svg?style=flat)](https://hex.pm/packages/scrivener) [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/scrivener)
+[![Build Status](https://travis-ci.org/drewolson/scrivener.svg?branch=master)](https://travis-ci.org/drewolson/scrivener/actions/workflows/test.yml)
 
 **Note**: You're probably looking for [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto). Have a look there first.
 
