@@ -1,6 +1,7 @@
 # Scrivener
 
-[![Build Status](https://travis-ci.org/drewolson/scrivener.svg?branch=master)](https://travis-ci.org/drewolson/scrivener/actions/workflows/test.yml)
+[![Build
+Status](https://github.com/drewolson/scrivener/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/drewolson/scrivener/actions/workflows/test.yml)
 
 **Note**: You're probably looking for [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto). Have a look there first.
 
