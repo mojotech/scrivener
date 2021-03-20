@@ -31,9 +31,9 @@ defmodule Scrivener.Mixfile do
 
   defp deps do
     [
+      {:ex_doc, ">= 0.0.0"},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, "~> 0.19.0", only: :dev},
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
     ]
   end
 
