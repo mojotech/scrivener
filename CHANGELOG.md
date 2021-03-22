@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.2
+
+* Fix ex_doc dependency
+
 ## 2.7.1
 
 * Improve type specs
