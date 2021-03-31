@@ -1,22 +1,19 @@
 defmodule Scrivener.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/drewolson/scrivener"
+  @version "2.7.2"
+
   def project do
     [
       app: :scrivener,
-      version: "2.7.2",
+      version: @version,
       elixir: "~> 1.2",
       elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
-      description: "Pagination for the Elixir ecosystem",
       deps: deps(),
-      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs"],
-      docs: [
-        main: "readme",
-        extras: [
-          "README.md"
-        ]
-      ]
+      docs: docs(),
+      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs"]
     ]
   end
 
@@ -31,23 +28,37 @@ defmodule Scrivener.Mixfile do
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev},
-      {:earmark, ">= 0.0.0", only: :dev},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 
   defp package do
     [
+      description: "Pagination for the Elixir ecosystem",
       maintainers: ["Drew Olson"],
       licenses: ["MIT"],
-      links: %{"github" => "https://github.com/drewolson/scrivener"},
       files: [
         "lib/scrivener.ex",
         "lib/scrivener",
         "mix.exs",
+        "CHANGELOG.md",
         "README.md"
-      ]
+      ],
+      links: %{
+        "Changelog" => "https://hexdocs.pm/scrivener/changelog.html",
+        "GitHub" => @source_url
+      }
+    ]
+  end
+
+  defp docs do
+    [
+      extras: ["CHANGELOG.md", "README.md"],
+      main: "readme",
+      source_url: @source_url,
+      source_ref: @version,
+      formatters: ["html"]
     ]
   end
 end
