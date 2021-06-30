@@ -18,7 +18,7 @@ only responding to pull requests and breaking issues.
 
 * [Scrivener.Ecto](https://github.com/drewolson/scrivener_ecto) paginate your Ecto queries with Scrivener
 * [Scrivener.HTML](https://github.com/mgwidmann/scrivener_html) generates HTML output using Bootstrap or other frameworks
-* [Scrivener.Headers](https://github.com/doomspork/scrivener_headers) adds response headers for API pagination
+* [Scrivener.Headers](https://github.com/beam-community/scrivener_headers) adds response headers for API pagination
 * [Scrivener.List](https://github.com/stephenmoloney/scrivener_list) allows pagination of a list
 
 ## Installation
