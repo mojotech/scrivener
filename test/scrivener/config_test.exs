@@ -100,5 +100,23 @@ defmodule Scrivener.ConfigTest do
       assert config.page_number == 1
       assert config.page_size == 10
     end
+
+    test "default page type is normal" do
+      config = Config.new(%{"module" => :module, "page" => "2", "page_size" => "15"})
+
+      assert config.page_type == :normal
+    end
+
+    test "can provide :simple page type" do
+      config =
+        Config.new(%{
+          "module" => :module,
+          "page" => "2",
+          "page_size" => "15",
+          "page_type" => :simple
+        })
+
+      assert config.page_type == :simple
+    end
   end
 end

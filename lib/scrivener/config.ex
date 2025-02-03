@@ -2,10 +2,13 @@ defmodule Scrivener.Config do
   @moduledoc """
   A `Scrivener.Config` can be created with a `caller`, a `page_number`, a `page_size` and a `module`. It can optionally be provided a `Keyword` of `options`.
 
+  The `page_type` can be set to `:simple`(default: `:normal`) to return a `Scrivener.SimplePage` instead of a `Scrivener.Page`.
+
       %Scrivener.Config{
         caller: self(),
         page_number: 2,
         page_size: 5,
+        page_type: :simple,
         module: MyApp.Repo,
         options: [
           foo: "bar"
@@ -13,7 +16,7 @@ defmodule Scrivener.Config do
       }
   """
 
-  defstruct [:caller, :module, :options, :page_number, :page_size]
+  defstruct [:caller, :module, :options, :page_number, :page_size, page_type: :normal]
 
   @type t :: %__MODULE__{}
 
@@ -32,7 +35,8 @@ defmodule Scrivener.Config do
       module: module,
       options: merged_options(defaults, options),
       page_number: page_number,
-      page_size: page_size(defaults, options)
+      page_size: page_size(defaults, options),
+      page_type: page_type(defaults, options)
     }
   end
 
@@ -45,6 +49,10 @@ defmodule Scrivener.Config do
 
   defp default_page_size(defaults) do
     defaults[:page_size] || 10
+  end
+
+  defp default_page_type(defaults) do
+    defaults[:page_type] || :normal
   end
 
   defp normalize_options(options) do
@@ -69,6 +77,10 @@ defmodule Scrivener.Config do
     requested_page_size = opts["page_size"] |> to_int(default_page_size)
 
     min(requested_page_size, defaults[:max_page_size])
+  end
+
+  def page_type(defaults, opts) do
+    opts["page_type"] || default_page_type(defaults)
   end
 
   defp to_int(:error, default), do: default
